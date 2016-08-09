@@ -1,2 +1,2 @@
 # -OpenCMIS
-A college management information system for UK specialist colleges
+A management information system for UK specialist colleges
