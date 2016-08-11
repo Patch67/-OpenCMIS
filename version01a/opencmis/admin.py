@@ -27,13 +27,27 @@ class StudentResource(resources.ModelResource):
         skip_unchanged = True
         report_skipped = True
 
-#Mega Important: Will not work until you register StudentAdmin with admin site
+
+class QualificationAdmin(ImportExportModelAdmin):
+    pass
+
+
+# Setup import_export
+# See https://django-import-export.readthedocs.io/en/latest/getting_started.html
+class QualificationResource(resources.ModelResource):
+
+    class Meta:
+        model = Qualification
+        fields = ('title', 'LAR',)             # Fields to import. NB. Will always want id in column 1
+        export_order = ('id', 'title', 'LAR',) # Fields to export
+        # Let me know what's happening
+        skip_unchanged = True
+        report_skipped = True
+
+# Import_export will not work until you register StudentAdmin with admin site
 admin.site.register(Student, StudentAdmin)
-
-
-# admin.site.register(Student)
 admin.site.register(Teacher)
 admin.site.register(Building)
 admin.site.register(Room)
-admin.site.register(Qualification)
+admin.site.register(Qualification, QualificationAdmin)
 admin.site.register(StudentQualification)
