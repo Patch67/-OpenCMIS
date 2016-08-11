@@ -53,8 +53,7 @@ class Building(models.Model):
 
 class Room(models.Model):
     building = models.ForeignKey('Building', on_delete=models.CASCADE)
-    number = models.CharField(max_length=4)
-    name = models.CharField(max_length=20)
+    room = models.CharField(max_length=20, null=False)
 
 
 def __str__(self):
