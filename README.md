@@ -1,5 +1,4 @@
 # -OpenCMIS
-A management information system for colleges.
-Written initially for Communication Specialist College Doncaster in the UK.
-Suitable for any college.
+Version01a
+This version concentrates on getting a single app working with multiple model classes.
 
