@@ -70,19 +70,35 @@ class RoomResource(resources.ModelResource):
         report_skipped = True
 
 
+# Teacher import_export
+class TeacherAdmin(ImportExportModelAdmin):
+    pass
+
+
+class TeacherResource(resources.ModelResource):
+    class Meta:
+        model = Teacher
+        fields = ('first_name', 'last_name', 'name',)  # Fields to import. NB. Will always want id in column 1
+        export_order = ('id', 'first_name', 'last_name', )  # Fields to export
+        # Let me know what's happening
+        skip_unchanged = True
+        report_skipped = True
+
+
 # See https://django-import-export.readthedocs.io/en/latest/getting_started.html
 # Import_export will not work until you register StudentAdmin with admin site
-admin.site.register(Student, StudentAdmin)
-admin.site.register(Teacher)
-admin.site.register(Building, BuildingAdmin)
-admin.site.register(Room, RoomAdmin)
-admin.site.register(Qualification, QualificationAdmin)
+admin.site.register(Student, StudentAdmin)# Imported tested
+admin.site.register(Teacher, TeacherAdmin)
+admin.site.register(Building, BuildingAdmin) # Imported Tested PAB 11/08/2016
+admin.site.register(Room, RoomAdmin) # Imported Tested PAB 11/08/2016
+admin.site.register(Qualification, QualificationAdmin) # Imported Tested PAB 11/08/2016
 admin.site.register(StudentQualification)
 
 '''
 Notes
 -----
 When importing tables that have foreign keys life can get tricky, especially if your source data does not export IDs.
+Databridge reports do not include ID fields but you could get these directly from the SQL if you knew the password
 
 The solution I found was to use Excel as an intermediary.
 1) Import the parent table into excel.  Generate your own IDs - simple numbers 1,2,3, etc.
