@@ -1,27 +1,38 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.views import generic
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.core.urlresolvers import reverse_lazy
+from .models import Student
 
 
-def dashboard(request):
-    html = '<div>Dashboard</div>'
-    return HttpResponse(html)
+class IndexView(generic.ListView):
+    template_name = 'opencmis/index.html'
+    context_object_name = 'all_students'
+
+    def get_queryset(self):
+        return Student.objects.all()
 
 
-def student_index(request):
-    html = '<div>Student Index</div>'
-    return HttpResponse(html)
+class DetailView(generic.DetailView):
+    model = Student
+    template_name = 'opencmis/detail.html'
 
 
-def teacher_index(request):
-    html = '<div>Teacher Index</div>'
-    return HttpResponse(html)
+class UpdateView(generic.UpdateView):
+    model = Student
+    fields = ['first_name', 'last_name', 'date_of_birth', 'gender', 'ULN']
+    template_name = 'opencmis/update.html'
 
 
-def qualification_index(request):
-    html = '<div>Qualification Index</div>'
-    return HttpResponse(html)
+class StudentCreate(CreateView):
+    model = Student
+    fields = ['first_name', 'last_name', 'date_of_birth', 'gender', 'ULN']
 
 
-def building_index(request):
-    html = '<div>Building Index</div>'
-    return HttpResponse(html)
+class StudentUpdate(UpdateView):
+    model = Student
+    fields = ['first_name', 'last_name', 'date_of_birth', 'gender', 'ULN']
+
+
+class StudentDelete(DeleteView):
+    model = Student
+    success_url = reverse_lazy('opencmis:index')

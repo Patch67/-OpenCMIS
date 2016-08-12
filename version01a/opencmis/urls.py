@@ -1,16 +1,24 @@
 from django.conf.urls import url, include
 from . import views
 
+app_name = "opencmis"
+
+'''New class based system'''
 urlpatterns = [
-    # /opencmis/
-    url(r'^$', views.dashboard, name='dashboard'),
     # /opencmis/student/
-    url(r'^student/$', views.student_index, name='student_index'),
-    # /opencmis/teacher/
-    url(r'^teacher/$', views.teacher_index, name='teacher_index'),
-    # /opencmis/qualification/
-    url(r'^qualification/$', views.qualification_index, name='qualification_index'),
-    # /opencmis/building/
-    url(r'^building/$', views.building_index, name='building_index'),
+    url(r'student/$', views.IndexView.as_view(), name='index'),
+
+    # /student/232/
+    url(r'^student/(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='detail'),
+
+    # /student/123/update/
+    url(r'student/(?P<pk>[0-9]+)/update/$', views.UpdateView.as_view(), name='student-update'),
+
+    # /student/add
+    url(r'student/add/$', views.StudentCreate.as_view(), name='student-create'),
+
+    # /student/123/delete/
+    url(r'student/(?P<pk>[0-9]+)/delete/$', views.StudentDelete.as_view(), name='student-delete'),
 
 ]
+
