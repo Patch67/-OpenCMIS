@@ -1,0 +1,25 @@
+{% extends 'opencmis/base.html' %}
+{% block title %}Student Index{% endblock %}
+{% block body %}
+    <h1>Student Index</h1>
+    <div class="container-fluid">
+        {% if all_students %}
+            <ul>
+                {% for student in all_students %}
+                <li>
+                    <a href="{% url 'opencmis:detail' student.id %}">{{student}}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>There are no student records to display.</p>
+        {% endif %}
+        <div class="row"><div class="col-md-12">&nbsp;</div></div>
+        <div class="row">
+            <div class="col-md-1">
+                <a href="{% url 'opencmis:student-create' %}"><span class="glyphicon glyphicon-plus-sign" area-hidden="true"></span>&nbsp;&nbsp;Add Student</a>
+            </div>
+            <div class="col-md-11"></div>
+        </div>
+    </div>
+{% endblock %}
