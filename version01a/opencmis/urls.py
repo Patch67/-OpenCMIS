@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^student/(?P<pk>[0-9]+)/$', views.DetailView.as_view(), name='detail'),
 
     # /student/123/update/
-    url(r'student/(?P<pk>[0-9]+)/update/$', views.UpdateView.as_view(), name='student-update'),
+    url(r'student/(?P<pk>[0-9]+)/update/$', views.StudentUpdate.as_view(), name='student-update'),
 
     # /student/add
     url(r'student/add/$', views.StudentCreate.as_view(), name='student-create'),

@@ -17,12 +17,6 @@ class DetailView(generic.DetailView):
     template_name = 'opencmis/detail.html'
 
 
-class UpdateView(generic.UpdateView):
-    model = Student
-    fields = ['first_name', 'last_name', 'date_of_birth', 'gender', 'ULN']
-    template_name = 'opencmis/update.html'
-
-
 class StudentCreate(CreateView):
     model = Student
     fields = ['first_name', 'last_name', 'date_of_birth', 'gender', 'ULN']
