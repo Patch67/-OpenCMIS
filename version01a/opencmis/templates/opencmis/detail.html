@@ -5,7 +5,11 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-1">Name:</div>
-            <div class="col-md-11">{{student}}</div>
+            <div class="col-md-1">{{student}}</div>
+            <div class="col-md-2">
+                <img src="{{ student.photo.url }}" class="img-responsive">
+            </div>
+            <div class="col-md-8">&nbsp;</div>
         </div>
         <div class="row">
             <div class="col-md-1">Date of Birth:</div>
@@ -19,6 +23,10 @@
             <div class="col-md-1">ULN:</div>
             <div class="col-md-11">{{student.ULN}}</div>
         </div>
+        <div class="row">
+
+        </div>
+
         <div class="row"><div class="col-md-12">&nbsp;</div></div>
         <div class="row">
 

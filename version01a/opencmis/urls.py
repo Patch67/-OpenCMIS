@@ -1,4 +1,6 @@
 from django.conf.urls import url, include
+
+
 from . import views
 
 app_name = "opencmis"
@@ -21,4 +23,3 @@ urlpatterns = [
     url(r'student/(?P<pk>[0-9]+)/delete/$', views.StudentDelete.as_view(), name='student-delete'),
 
 ]
-
