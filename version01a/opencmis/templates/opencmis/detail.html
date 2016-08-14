@@ -1,15 +1,13 @@
 {% extends 'opencmis/base.html' %}
 {% block title %}{{student}}{% endblock %}
 {% block body %}
-    <h1>Student Detail</h1>
+    <h1>{{student}}</h1>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-1">Name:</div>
-            <div class="col-md-1">{{student}}</div>
-            <div class="col-md-2">
+            <div class="col-md-4">
                 <img src="{{ student.photo.url }}" class="img-responsive">
             </div>
-            <div class="col-md-8">&nbsp;</div>
+            <div class="col-md-8"></div>
         </div>
         <div class="row">
             <div class="col-md-1">Date of Birth:</div>
@@ -39,8 +37,6 @@
             <!-- If this is the case I guess I need to make a FORM for update and
             include all the data I need in hidden inputs like he's done with the student.id -->
 
-            <a href="{% url 'opencmis:student-update' student.id %}"><span class="glyphicon glyphicon-pencil"></span> &nbsp;&nbsp;</a>
-
            <div class="col-md-1">
                 <form action="{% url 'opencmis:student-update' student.id %}" method="POST" style="display: inline;">
                     {% csrf_token %}
@@ -62,7 +58,9 @@
                 </form>
             </div>
 
-            <div class="col-md-10"></div>
+            <div class="col-md-10">
+                <a href="{% url 'opencmis:student-update' student.id %}"><span class="glyphicon glyphicon-pencil"></span> &nbsp;&nbsp;</a>
+            </div>
         </div>
     </div>
 {% endblock %}

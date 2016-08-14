@@ -14,7 +14,7 @@ class Student(models.Model):
     area = models.CharField(max_length=50, null=True)
     town = models.CharField(max_length=50, null=True)
     post_code = models.CharField(max_length=12, null=True)
-    photo = models.FileField( blank=True, null=True)
+    photo = models.FileField(blank=True, null=True)
 
     def __str__(self):
         return '%s %s' % (self.first_name, self.last_name)
