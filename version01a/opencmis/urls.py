@@ -22,4 +22,7 @@ urlpatterns = [
     # /student/123/delete/
     url(r'student/(?P<pk>[0-9]+)/delete/$', views.StudentDelete.as_view(), name='student-delete'),
 
+    # /student/123/qualifications
+    url(r'student/(?P<pk>[0-9]+)/qualification/$', views.StudentQualificationList.as_view(),
+        name='student-qualification'),
 ]
