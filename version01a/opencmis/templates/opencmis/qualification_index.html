@@ -1,0 +1,33 @@
+{% extends 'opencmis/base.html' %}
+{% block title %}{{student}}{% endblock %}
+{% block body %}
+    <!-- This looks good but is not ideal -->
+    <!-- Might it not be better to steer this to some sort of view -->
+    <ul class="nav nav-tabs">
+        <li><a href="{% url 'opencmis:index' %}">Home</a></li>
+        <li><a href="#">Baseline Assessment</a></li>
+        <li><a href="#">Targets</a></li>
+        <li class="active"><a href="#">Qualifications</a></li>
+        <li><a href="#">Reviews</a></li>
+        <li><a href="#">Audiology</a></li>
+        <li><a href="#">Medical</a></li>
+        <li><a href="#">Behaviour</a></li><!-- This is the Django link way -->
+    </ul>
+
+    <h1>{{student}}</h1>
+    <div class="container-fluid">
+            {% if student_qualifications %}
+                {% for student_qualification in student_qualifications %}
+                    <div class="row">
+                        <div class="col-md-6">{{student_qualification.qualification}}</div>
+                        <div class="col-md-2">{{student_qualification.start}}</div>
+                        <div class="col-md-2">{{student_qualification.expected_end}}</div>
+                    </div>
+                {% endfor %}
+            {% else %}
+            <div class="alert alert-warning" role="alert">
+                <strong>There are no qualifications to display.</strong>
+            </div>
+            {% endif %}
+        </div>
+    </div>{% endblock %}
