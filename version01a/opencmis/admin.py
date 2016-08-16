@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Student, Teacher, Building, Room, Qualification, StudentQualification
+from .models import Student, Teacher, Building, Room, Qualification, StudentQualification, Behaviour
 
 
 from django.contrib import admin
@@ -93,6 +93,7 @@ admin.site.register(Building, BuildingAdmin) # Imported Tested PAB 11/08/2016
 admin.site.register(Room, RoomAdmin) # Imported Tested PAB 11/08/2016
 admin.site.register(Qualification, QualificationAdmin) # Imported Tested PAB 11/08/2016
 admin.site.register(StudentQualification)
+admin.site.register(Behaviour)
 
 '''
 Notes

@@ -1,29 +1,17 @@
 {% extends 'opencmis/base.html' %}
 {% block title %}{{student}}{% endblock %}
+{% block home-active %}active{% endblock %}
 {% block body %}
-    <!-- This looks good but is not ideal -->
-    <!-- Might it not be better to steer this to some sort of view -->
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#home">Home</a></li>
-        <li><a href="#">Baseline Assessment</a></li>
-        <li><a href="#">Targets</a></li>
-        <li><a href="{% url 'opencmis:student-qualification' student.id %}">Qualifications</a></li>
-        <li><a href="#">Reviews</a></li>
-        <li><a href="#">Audiology</a></li>
-        <li><a href="#">Medical</a></li>
-        <li><a href="#">Behaviour</a></li><!-- This is the Django link way -->
-    </ul>
-
     <h1>{{student}}</h1>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-4">
                 {% if student.photo %}
-                <img src="{{student.photo.url }}" class="img-responsive">
+                    <img src="{{student.photo.url }}" class="img-responsive">
                 {% else %}
-                <div class="alert alert-warning" role="alert">
-                    <strong>No photo</strong>
-                </div>
+                    <div class="alert alert-warning" role="alert">
+                      <strong>No photo</strong>
+                    </div>
                 {% endif %}
             </div>
             <div class="col-md-8"></div>
@@ -41,7 +29,8 @@
             <div class="col-md-11">{{student.ULN}}</div>
         </div>
         <div class="row">
-
+            <div class="col-md-1">House</div>
+            <div class="col-md-11">{{student.house}}</div>
         </div>
 
         <div class="row"><div class="col-md-12">&nbsp;</div></div>

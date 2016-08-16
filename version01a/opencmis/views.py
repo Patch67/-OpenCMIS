@@ -1,7 +1,8 @@
+from django.shortcuts import get_object_or_404, render
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
-from .models import Student, StudentQualification
+from .models import Student, StudentQualification, Behaviour
 
 
 class IndexView(generic.ListView):
@@ -42,3 +43,11 @@ class StudentQualificationList(generic.ListView):
     def get_queryset(self):
         # TODO: How to pass Student.id or pk into next line
         return StudentQualification.objects.filter(student=1)
+
+
+def behaviour_index(request, student_id):
+    template = 'opencmis/behaviour_index.html'
+    student = get_object_or_404(Student, pk=student_id)
+    behaviour_list = Behaviour.objects.filter(student=student_id)
+    context = {'student': student, 'behaviour_list': behaviour_list}
+    return render(request, template, context)

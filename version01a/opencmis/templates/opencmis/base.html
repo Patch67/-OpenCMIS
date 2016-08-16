@@ -74,6 +74,17 @@
             </div>
         </div>
     </nav>
+    <ul class="nav nav-tabs">
+        <li class="{% block home-active %}{% endblock %}"><a href="{% url 'opencmis:detail' student.id %}">Home</a></li>
+        <li class="{% block baseline-active %}{% endblock %}"><a href="#">Baseline Assessment</a></li>
+        <li class="{% block target-active %}{% endblock %}"><a href="#">Targets</a></li>
+        <li class="{% block qualification-active %}{% endblock %}"><a href="{% url 'opencmis:student-qualification' student.id %}">Qualifications</a></li>
+        <li class="{% block review-active %}{% endblock %}"><a href="#">Reviews</a></li>
+        <li class="{% block audiology-active %}{% endblock %}"><a href="#">Audiology</a></li>
+        <li class="{% block medical-active %}{% endblock %}"><a href="#">Medical</a></li>
+        <li class="{% block behaviour-active %}{% endblock %}"><a href="{% url 'opencmis:behaviour-index' student.id %}">Behaviour</a></li>
+    </ul>
+
     <div class="container-fluid">
         <span class="span2">
             {% block index %}

@@ -7,7 +7,7 @@ class Student(models.Model):
     first_name = models.CharField(max_length=50, blank=False)
     last_name = models.CharField(max_length=30, blank=False)
     gender = models.CharField(max_length=1, choices=gender_choices, default='M')
-    date_of_birth = models.DateField(blank=False, null=True)
+    date_of_birth = models.DateField(blank=False)
     ULN = models.CharField(max_length=10, blank=True)
     house = models.CharField(max_length=50, blank=True)
     road = models.CharField(max_length=50, blank=True)
@@ -23,18 +23,27 @@ class Student(models.Model):
         return reverse('opencmis:detail', kwargs={'pk': self.pk})
 
 
+class Behaviour(models.Model):
+    student = models.ForeignKey('Student', on_delete=models.CASCADE)
+    issue = models.TextField(max_length=50, blank=False)
+    action = models.TextField(max_length=50)
+
+    def __str__(self):
+        return self.issue
+
+
 class Teacher(models.Model):
-    first_name = models.CharField(max_length=50, null=False)
-    last_name = models.CharField(max_length=30, null=False)
-    role = models.CharField(max_length=30, null=False)
+    first_name = models.CharField(max_length=50, blank=False)
+    last_name = models.CharField(max_length=30, blank=False)
+    role = models.CharField(max_length=30, blank=False)
 
     def __str__(self):
         return '%s %s' % (self.first_name, self.last_name)
 
 
 class Qualification(models.Model):
-    title = models.CharField(max_length=100, null=False)
-    LAR = models.CharField(max_length=12, null=False)
+    title = models.CharField(max_length=100, blank=False)
+    LAR = models.CharField(max_length=12, blank=False)
 
     def __str__(self):
         return '%s: %s' % (self.LAR, self.title)
@@ -43,8 +52,8 @@ class Qualification(models.Model):
 class StudentQualification(models.Model):
     student = models.ForeignKey('Student', on_delete=models.CASCADE)
     qualification = models.ForeignKey('Qualification', on_delete=models.CASCADE)
-    start = models.DateField(null=False, blank=False)
-    expected_end = models.DateField(null=False, blank=False )
+    start = models.DateField(blank=False)
+    expected_end = models.DateField(blank=False )
 
     def __str__(self):
         return '%s: %s' % (self.student, self.qualification)
@@ -59,12 +68,9 @@ class Building(models.Model):
 
 class Room(models.Model):
     building = models.ForeignKey('Building', on_delete=models.CASCADE)
-    room = models.CharField(max_length=20, null=False)
+    room = models.CharField(max_length=20, blank=False)
 
-
-def __str__(self):
-    return '%s: %s' % (self.building, self.name)
-
-
+    def __str__(self):
+        return '%s: %s' % (self.building, self.name)
 
 
