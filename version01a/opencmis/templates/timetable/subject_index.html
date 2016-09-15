@@ -1,0 +1,111 @@
+{% extends 'opencmis/base.html' %}
+{% block title %}Subject Index{% endblock %}
+{% block home-active %}active{% endblock %}
+
+{% block index %}
+
+    <div class="panel panel-primary" data-toggle="tooltip" title="Drag fields to Select or Criteria">
+        <div class="panel-heading">Subject</div>
+        <div class="panel-body">
+            <ul class="list-group">
+                {% for subject in subject_list %}
+                    <li class="list-group-item" draggable="true"
+                        style="background-color:#{{subject.colour}} important!;"
+                       id="s{{subject.id}}"
+                       ondragstart="drag(event)">{{subject.subject}}</li>
+                {% empty %}
+                    <div class="alert alert-warning" role="alert">
+                        <strong>There are no subject records to display.</strong>
+                    </div>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+{% block body %}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Day/Time</th>
+            <th>9am</th>
+            <th>10am</th>
+            <th>11am</th>
+            <th>12am</th>
+            <th>1pm</th>
+            <th>2pm</th>
+            <th>3pm</th>
+            <th>4pm</th>
+            <th>Evening</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Monday</td>
+            <td id="s11" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s12" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s13" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s14" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s15" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s16" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s17" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s18" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s19" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+        </tr>
+        <tr>
+            <td>Tuesday</td>
+            <td id="s21" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s22" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s23" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s24" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s25" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s26" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s27" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s28" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s29" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+        </tr>
+        <tr>
+            <td>Wednesday</td>
+            <td id="s31" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s32" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s33" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s34" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s35" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s36" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s37" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s38" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s39" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+        </tr>
+        <tr>
+            <td>Thursday</td>
+            <td id="s41" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s42" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s43" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s44" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s45" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s46" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s47" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s48" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s49" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+        </tr>
+        <tr>
+            <td>Friday</td>
+            <td id="s51" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s52" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s53" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s54" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s55" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s56" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s57" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s58" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+            <td id="s59" ondrop="drop(event)" ondragover="allowDrop(event)" ondragstart="drag(event)"></td>
+        </tr>
+    </tbody>
+</table>
+<input type="submit" class="btn btn-primary" value="Save">
+<div class="panel panel-info">
+    <div class="panel-heading">Notes</div>
+    <div class="panel-body">
+        <p>Timetable groups should be established, i.e. Car Body Students, Hairdressing Students, Link Students, etc.</p>
+        <p></p>
+    </div>
+{% endblock %}

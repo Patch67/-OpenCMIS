@@ -1,0 +1,21 @@
+<span class="text-danger small">{{ field.errors }}</span>
+<div class="form-group">
+    <label for="id_title">Title</label>
+    <input class="form-control" id="id_title" maxlength="80" name="title"
+           type="text" required value="{{article.title}}"/>
+</div>
+<div class="form-group">
+    <label for="id_author">Author</label>
+    <input class="form-control" id="id_author" maxlength="12" name="author"
+           type="text" required value="{{article.author}}"/>
+</div>
+<div class="form-group">
+    <label for="mytextarea">Body</label>
+    <textarea class="form-control" id="mytextarea" name="body" rows="20">{{article.body}}</textarea>
+</div>
+<div class="form-group">
+    <label for="id_tags">Tags</label>
+    <input class="form-control" id="id_tags" maxlength="12" name="tags"
+           type="text" required value="{{article.tags}}"/>
+</div>
+

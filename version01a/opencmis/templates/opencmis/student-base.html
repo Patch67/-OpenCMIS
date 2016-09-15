@@ -1,0 +1,37 @@
+{% extends 'opencmis/base.html' %}
+{% block submenu %}
+<ul class="nav nav-tabs">
+    <li class="{% block home-active %}{% endblock %}"><a href="{% url 'opencmis:detail' student.id %}">Home</a></li>
+    <li class="{% block baseline-active %}{% endblock %}"><a href="{% url 'opencmis:baseline' student.id %}">Baseline Assessment</a></li>
+    <li class="{% block target-active %}{% endblock %}"><a href="#">Targets</a></li>
+    <li class="{% block qualification-active %}{% endblock %}"><a href="{% url 'opencmis:student-qualification' student.id %}">Qualifications</a></li>
+    <li class="{% block review-active %}{% endblock %}"><a href="#">Reviews</a></li>
+    <li class="{% block audiology-active %}{% endblock %}"><a href="#">Audiology</a></li>
+    <li class="{% block medical-active %}{% endblock %}"><a href="#">Medical</a></li>
+    <li class="{% block behaviour-active %}{% endblock %}"><a href="{% url 'opencmis:behaviour-index' student.id %}">Behaviour</a></li>
+</ul>
+{% endblock %}
+{% block body %}
+<div class="panel panel-primary">
+    <div class="panel-heading">{{student}}</div>
+    <div class="panel-body">
+        {% block student-body %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}
+{% block index %}
+    {% for student in student_list %}
+        <a href="{% url 'opencmis:detail' student.id %}{{tab}}">{{student}}</a><br>
+    {% empty %}
+        <div class="alert alert-warning" role="alert">
+            <strong>There are no student records to display.</strong>
+        </div>
+    {% endfor %}
+    <div class="row">
+        <a href="{% url 'opencmis:student-create' %}">
+            <span class="glyphicon glyphicon-plus-sign" area-hidden="true"></span>
+            &nbsp;&nbsp;Add Student
+        </a>
+    </div>
+{% endblock %}

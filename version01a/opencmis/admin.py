@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import Student, Teacher, Building, Room, Qualification, StudentQualification, Behaviour
+from .models import Student, Teacher, Building, Room, Qualification, StudentQualification,\
+    Behaviour, BaselineAssessment, Ethnicity, Status, Title, BaselineEntry, BaselineValue
 
 
 from django.contrib import admin
 from import_export import resources
-from .models import Student
 from import_export.admin import ImportExportModelAdmin
 
 
@@ -85,16 +85,60 @@ class TeacherResource(resources.ModelResource):
         report_skipped = True
 
 
+# ETHNICITY IMPORT / EXPORT
+class EthnicityResource(resources.ModelResource):
+    class Meta:
+        model = Ethnicity
+        fields = ('id', 'code', 'vaue',)  # Fields to import
+        export_order = ('id', 'first_name', 'last_name',)  # Order for export
+        # Let me know what's happening
+        skip_unchanged = True
+        report_skipped = True
+
+
+class EthnicityAdmin(ImportExportModelAdmin):
+    pass
+
+# STATUS IMPORT / EXPORT
+class StatusResource(resources.ModelResource):
+    class Meta:
+        model = Status
+        fields = ('id', 'status', )
+        export_order = ('id', 'status', )
+
+
+class StatusAdmin(ImportExportModelAdmin):
+    pass
+
+
+# TITLE IMPORT / EXPORT
+class TitleResource(resources.ModelResource):
+    class Meta:
+        model = Title
+        fields = ('id', 'title', )
+        export_order = ('id', 'title', )
+
+
+class TitleAdmin(ImportExportModelAdmin):
+    pass
+
+
+
 # See https://django-import-export.readthedocs.io/en/latest/getting_started.html
 # Import_export will not work until you register StudentAdmin with admin site
-admin.site.register(Student, StudentAdmin)# Imported tested
+admin.site.register(BaselineEntry)
+admin.site.register(BaselineValue)
+admin.site.register(Title, TitleAdmin)
+admin.site.register(Ethnicity, EthnicityAdmin)
+admin.site.register(Status, StatusAdmin)
+admin.site.register(Student, StudentAdmin)  # Tested - working
 admin.site.register(Teacher, TeacherAdmin)
 admin.site.register(Building, BuildingAdmin) # Imported Tested PAB 11/08/2016
 admin.site.register(Room, RoomAdmin) # Imported Tested PAB 11/08/2016
 admin.site.register(Qualification, QualificationAdmin) # Imported Tested PAB 11/08/2016
 admin.site.register(StudentQualification)
 admin.site.register(Behaviour)
-
+admin.site.register(BaselineAssessment)
 '''
 Notes
 -----

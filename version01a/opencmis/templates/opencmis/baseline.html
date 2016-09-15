@@ -1,0 +1,34 @@
+{% extends 'opencmis/student-base.html' %}
+{% block title %}{{ student}}{% endblock %}
+{% block baseline-active %}active{% endblock %}
+{% block student-body %}
+    {% for e in baseline_list %}
+        <div class="panel panel-default">
+            <div class="panel-heading">{{e.entry}}</div>
+            <div class="panel-body">
+                {% for i in e.data %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">Week&nbsp;{{i.week}}&nbsp;<a href="{% url 'opencmis:student-update' student.id %}"><span
+                    class="glyphicon glyphicon-pencil"></span></a></div>
+                    <div class="panel-body">
+                        {{i.text|safe}}
+                    </div>
+                    <div class="panel-footer">{{i.user}} : {{i.date}}</div>
+                </div>
+                {% empty %}
+                    <div class="alert alert-warning" role="alert">
+                        <strong>There are no records to display.</strong>
+                    </div>
+                {% endfor %}
+                <a href="{% url 'opencmis:baseline-add' student.id e.entry.pk %}">
+
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+            </div>
+        </div>
+    {% empty %}
+        <div class="alert alert-warning" role="alert">
+            <strong>There are no qualifications to display.</strong>
+        </div>
+    {% endfor %}
+{% endblock %}
