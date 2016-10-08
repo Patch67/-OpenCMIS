@@ -1,7 +1,11 @@
 {% extends 'opencmis/base.html' %}
 {% block submenu %}
+<!-- Submenu fails if student doesn't contain a valid id -->
+<!-- Set student to Nobody on index page when a student hasn't yet been selected -->
+<!-- Check if there is a selected student before strying to access student ids -->
+{% if student != 'Nobody' %}
 <ul class="nav nav-tabs">
-    <li class="{% block home-active %}{% endblock %}"><a href="{% url 'opencmis:detail' student.id %}">Home</a></li>
+    <li class="{% block home-active %}{% endblock %}"><a href="{% url 'opencmis:student-detail' student.id %}">Home</a></li>
     <li class="{% block baseline-active %}{% endblock %}"><a href="{% url 'opencmis:baseline' student.id %}">Baseline Assessment</a></li>
     <li class="{% block target-active %}{% endblock %}"><a href="#">Targets</a></li>
     <li class="{% block qualification-active %}{% endblock %}"><a href="{% url 'opencmis:student-qualification' student.id %}">Qualifications</a></li>
@@ -10,6 +14,7 @@
     <li class="{% block medical-active %}{% endblock %}"><a href="#">Medical</a></li>
     <li class="{% block behaviour-active %}{% endblock %}"><a href="{% url 'opencmis:behaviour-index' student.id %}">Behaviour</a></li>
 </ul>
+{% endif %}
 {% endblock %}
 {% block body %}
 <div class="panel panel-primary">
@@ -21,17 +26,74 @@
 </div>
 {% endblock %}
 {% block index %}
-    {% for student in student_list %}
-        <a href="{% url 'opencmis:detail' student.id %}{{tab}}">{{student}}</a><br>
+    <!--TODO: Best Practice Expand this across all applications-->
+    {% if perms.add_person %}
+    <a href="{% url 'opencmis:student-create' %}">
+        <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+    </a>
+    {% endif %}
+
+    <form id="searchform" action="" method="get" accept-charset="utf-8">
+        <fieldset>
+            <div class="form-group">
+                <label class="col-xs-4 col-form-label" for="filter">Status</label>
+                <div class="col-xs-8">
+                    <select class="form-control" id = "filter" name="filter">
+                        <option value="any">Any</option>
+                        {% for v in index.filter %}
+                        <option value="{{v.id}}">{{v}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-xs-10">
+                    <input class="form-control" id="searchbox" name="q" type="text" placeholder="Search">
+                </div>
+                <div class="col-xs-2">
+                    <button class="btn btn-primary" type="submit">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    {% for i in index.index %}
+    <a href="{% url 'opencmis:student-detail' i.id %}">{{i}}</a><br>
     {% empty %}
-        <div class="alert alert-warning" role="alert">
-            <strong>There are no student records to display.</strong>
-        </div>
+    <li>No people returned.</li>
     {% endfor %}
-    <div class="row">
-        <a href="{% url 'opencmis:student-create' %}">
-            <span class="glyphicon glyphicon-plus-sign" area-hidden="true"></span>
-            &nbsp;&nbsp;Add Student
-        </a>
+    <!-- TODO: Best Practice Do long indices like this -->
+    {% if index.index.paginator.num_pages != 1 %}
+    <div class="pagination">
+        <span class="step-links">
+            {% if index.index.has_previous %}
+                <a href="?page=1">
+                    <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span>
+                </a>
+                <a href="?page={{ index.index.previous_page_number }}">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                </a>
+            {% else %}
+                <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            {% endif %}
+
+            <span class="current">
+                [ {{ index.index.number }} / {{ index.index.paginator.num_pages }} ]
+            </span>
+
+            {% if index.index.has_next %}
+                <a href="?page={{ index.index.next_page_number }}">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                </a>
+                <a href="?page={{ index.index.paginator.num_pages }}">
+                    <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
+                </a>
+            {% else %}
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
+            {% endif %}
+        </span>
+        <div id=”results”></div>
     </div>
+    {% endif %}
 {% endblock %}

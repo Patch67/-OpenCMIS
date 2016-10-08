@@ -15,10 +15,10 @@ urlpatterns = [
         views.IndexView.as_view(),
         name='index'),
 
-    # /opencmis/student/ilr
-    url(r'student/ilr/$',
-        views.ILR,
-        name='ilr'),
+    # /opencmis/student/232/
+    url(r'student/(?P<pk>[0-9]+)/$',
+        views.DetailView.as_view(),
+        name='student-detail'),
 
     # /opencmis/student/gmail
     url(r'student/gmail/$',
@@ -74,9 +74,9 @@ urlpatterns = [
         views.BaselineAdd.as_view(),
         name='baseline-add'),
 
-    # /student/232/
-    url(r'student/(?P<pk>[0-9]+)/$',
-        views.DetailView.as_view(),
-        name='detail'),
+    # /ilr/
+    url(r'ilr/$', views.ILR, name='ilr'),
 
+    # /dashboard/
+    url(r'dashboard/$', views.dashboard, name='dashboard'),
 ]

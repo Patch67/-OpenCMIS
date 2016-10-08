@@ -1,25 +1,11 @@
-{% extends 'opencmis/base.html' %}
+{% extends 'opencmis/student-base.html' %}
 {% block title %}Student Index{% endblock %}
 {% block home-active %}active{% endblock %}
-{% block index %}
-    {% for student in student_list %}
-        <a href="{% url 'opencmis:detail' student.id %}{{tab}}">{{student}}</a><br>
-    {% empty %}
-        <div class="alert alert-warning" role="alert">
-            <strong>There are no student records to display.</strong>
-        </div>
-    {% endfor %}
-    <div class="row">
-            <a href="{% url 'opencmis:student-create' %}">
-                <span class="glyphicon glyphicon-plus-sign" area-hidden="true"></span>
-                &nbsp;&nbsp;Add Student
-            </a>
-    </div>
-{% endblock %}
+
 {% block body %}
 <div class="panel panel-primary">
 <div class="panel-heading">Welcome to OpenCMIS.</div>
-<div class="panel-body">The Open Source College Management Information System.
+<div class="panel-body">The Open Source College Management Information System.<br>
 Written by Patrick Biggs.</div>
 </div>
 {% endblock %}

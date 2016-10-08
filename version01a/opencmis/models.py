@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
 
 
 class Student(models.Model):
@@ -106,7 +105,6 @@ class BaselineValue(models.Model):
     def __str__(self):
         return "%s - %s : week %d" % (self.student, self.baseline, self.week)
 
-
     def get_absolute_url(self):
         return u'/opencmis/student/%d/baseline/' % self.student_id
 
@@ -148,17 +146,14 @@ class Staff(models.Model):
     last_name = models.CharField(max_length=50)
 
 
-# Classes for ILR
-class Header:
-    UKPRN = '10002006'
-    post_code = 'DN2 6AY'
-
-
 class Ethnicity(models.Model):
     value = models.CharField(max_length=30)
 
     def __str__(self):
         return self.value
+
+    class Meta:
+        verbose_name_plural = 'Ethnicity'
 
 
 class Status(models.Model):
@@ -174,8 +169,27 @@ class Status(models.Model):
 class Title(models.Model):
     title = models.CharField(max_length=30)
 
-    class Meta:
-        verbose_name_plural = 'Titles'
-
     def __str__(self):
         return self.title
+
+
+# Classes for ILR
+# TODO: Fix me! This orks but it isn't right.  Specific data for an installation shouldn't be in the code it should be
+# in the database and have a specific form.
+
+
+class Organisation(models.Model):
+    ukprn = models.CharField(max_length=8, unique=True)  # 10002006
+    name = models.CharField(max_length=100)  # 'Communication Specialist College Doncaster"
+    post_code = models.CharField(max_length=10)
+
+
+class Header:
+    """
+    # TODO: Make this into a table of globals , i.e. tag, value.
+    Note this isn't a models.Model it is just a class to enable me to define some one off values for the ILR.
+    """
+    UKPRN = '10002006'
+    post_code = 'DN2 6AY'
+
+

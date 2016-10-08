@@ -58,7 +58,7 @@ $(document).ready(function(){
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{% url 'opencmis:index' %}">OpenCMIS</a>
+                <a class="navbar-brand" href="{% url 'opencmis:dashboard' %}">OpenCMIS</a>
             </div>
 
             <!-- Items -->
@@ -97,7 +97,7 @@ $(document).ready(function(){
                             <span class="glyphicon glyphicon-book" area-hidden="true"></span> Articles
                         </a>
                     </li>
-                    <li class="">{{request.user}}</li>
+                    <li class=""><a href="#">{{user}}</a></li>
                     <li class="">
                         <a href="#">
                             <span class="glyphicon glyphicon-log-out" area-hidden="true"></span>&nbsp;&nbsp;Logout

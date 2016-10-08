@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'opencmis.apps.OpencmisConfig',
     'timetable.apps.TimetableConfig',
     'articles.apps.ArticlesConfig',
+    'issues.apps.IssuesConfig',
     'import_export',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -127,3 +128,4 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 LOGIN_REDIRECT_URL = '/opencmis/student/'
+
