@@ -1,0 +1,55 @@
+{% extends 'issue/issue-base.html' %}
+{% block title %}Issue{% endblock %}
+{% block baseline-active %}active{% endblock %}
+{% block body %}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{object.title}}</h3>
+    </div>
+    <div class="panel-body">{{object.summary|striptags|urlize|linebreaks}}
+        <ul class="list-group">
+        {% for update in updates %}
+            <li class="list-group-item">
+                <p>{{update}}</p>
+                {{update.update|striptags|urlize|linebreaks}}
+            </li>
+        {% empty %}
+            <p>There are no updates yet.</p>
+        {% endfor %}
+        </ul>
+    </div>
+    <div class="panel-footer hidden-print">
+        <form class="form-horizontal" action="" method="post">
+            {% csrf_token %}
+            <div class="form-check">
+                <label>Status:</label>
+                <label class="radio-inline"><input type="radio" name="status">Close</label>
+                <label class="radio-inline"><input type="radio" name="status" checked>Open</label>
+                <label class="radio-inline"><input type="radio" name="status">On hold</label>
+            </div>
+            <div class="form-check">
+                <label>Public:</label>
+                <label class="radio-inline"><input type="radio" name="Public" checked>Public</label>
+                <label class="radio-inline"><input type="radio" name="Public">Private</label>
+            </div>
+             <div class="form-check">
+              <label for="update">Update:</label>
+              <textarea class="form-control" rows="5" id="update">Type Something here</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </div>
+</div>
+{% comment %}
+Notice the user of perm here, especially perm.appname.permision
+Can use this to check whether editable links should be displayed or not
+{% endcomment %}
+<div class="hidden-print">
+{% if perms.issue.change_issue %}
+    <a href="{% url 'issue:update' object.id %}">Edit</a><br>
+{% endif %}
+{% if perms.issue.delete_issue %}
+    <a href="{% url 'issue:delete' object.id %}">Delete</a><br>
+{%endif %}
+</div>
+{% endblock %}}

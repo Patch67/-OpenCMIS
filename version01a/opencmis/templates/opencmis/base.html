@@ -49,7 +49,7 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-    <nav class="navbar navbar-inverse">
+    <nav class="navbar navbar-inverse hidden-print">
         <div class="container-fluid">
             <!-- Header -->
             <div class="navbar-header">
@@ -97,6 +97,11 @@ $(document).ready(function(){
                             <span class="glyphicon glyphicon-book" area-hidden="true"></span> Articles
                         </a>
                     </li>
+                    <li class="">
+                        <a href="/issue/">
+                            <span class="glyphicon glyphicon-tag" area-hidden="true"></span> Issues
+                        </a>
+                    </li>
                     <li class=""><a href="#">{{user}}</a></li>
                     <li class="">
                         <a href="#">
@@ -107,13 +112,17 @@ $(document).ready(function(){
             </div>
         </div>
     </nav>
-    {% block submenu %}
-    {% endblock %}
+    <div class="hidden-print">
+        {% block submenu %}
+        {% endblock %}
+    </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-3">
-                {% block index %}
-                {% endblock %}
+                <div class="hidden-print">
+                    {% block index %}
+                    {% endblock %}
+                </div>
             </div>
             <div class="col-sm-9">
                 {% block body %}

@@ -24,7 +24,7 @@ urlpatterns = [
     url(r'^opencmis/', include('opencmis.urls')),
     url(r'^timetable/', include('timetable.urls')),
     url(r'^article/', include('articles.urls')),
-    url(r'^issue/', include('issue.urls')),
+    url(r'^issue/', include('issues.urls')),
     url('^', include('django.contrib.auth.urls')),
 ]
 

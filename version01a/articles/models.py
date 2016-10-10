@@ -27,5 +27,5 @@ class Article(models.Model):
         """
         return u'/article/%d/' % self.id
 
-# TODO: Should a define a form for this model and should it be done here?
+
 
