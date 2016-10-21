@@ -43,3 +43,12 @@ However Desktop and Web are not the same.
 I can't do a commit from Development to Development because Desktop says they are the same.
 I can only do a commit to another branch, i.e. Version01a but I don't want to do that.
 Version 01a is a backup copy and should not be changed.
+
+I may have got it.
+------------------
+Make changes on PyCharm.
+Look on Desktop (Left hand side).
+It shows there are changes.
+Do a local commit.
+Do a Sync.
+Then the local repo and the remote repo are the same.
