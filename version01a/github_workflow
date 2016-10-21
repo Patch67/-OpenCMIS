@@ -64,3 +64,5 @@ Well I've got this.
 Desktop Sync brings down any changes straight into PyCharm and PyCharm get the changes instantly.
 So I've just made this change in Pycharm. Now Desktop Commit & Sync.
 Notice that the Pycharm file goes blue when it needs committing.
+Once it has been committed it goes back to white.
+
