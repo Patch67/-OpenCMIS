@@ -77,7 +77,7 @@ Make your changes in PyCharm on the same Github folder as the repo.
 
 End
 ---
-Open Desktop and Sync. Things registeres any local changes in the repo.
+Open Desktop and Sync. Things registers any local changes in the repo.
 Commit changes. This authorises the changes.
 Sync. This pushes the commits to the remote repo.
 
