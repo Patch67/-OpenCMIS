@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
-from .models import Student, Status, StudentQualification, Behaviour, BaselineAssessment, Qualification,\
+from .models import Student, Status, StudentQualification, Behaviour, Qualification,\
     BaselineValue, BaselineEntry, Header
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -235,14 +235,14 @@ class BaselineIndex(ListView):
 class BaselineAdd(CreateView):
     model = BaselineValue
     template_name = 'opencmis/baseline-add.html'
-    fields = ['text', 'place']
+    fields = ['text']
 
     def get_object(self):
         return get_object_or_404(BaselineValue, pk=self.kwargs['pk'])
 
     def get_context_data(self, **kwargs):
         context = super(BaselineAdd, self).get_context_data(**kwargs)
-        context['student_list'] = Student.objects.all()
+        #context['student_list'] = Student.objects.all()
 
         context['student'] = get_object_or_404(Student, pk=self.kwargs['student_id'])
         my_list = []
