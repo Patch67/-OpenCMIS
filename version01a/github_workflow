@@ -90,3 +90,13 @@ The Development branch will replace my USB stick.
 At the end of a development phase (weekly?) I will test the development branch and if all is well make a pull request to the Master.
 If all is well then the Master will always be a stable branch.
 The Development branch may get broken and if so I should have a way to just drop it and go back to the Master.
+
+Cloning
+-------
+git clone https://github.com/Paych67/OpenCMIS3
+
+This gets the default branch.
+
+Note This is not the Development branch it is the Master branch.
+So you must create a pull request to merge the Development and the Master branches.
+
