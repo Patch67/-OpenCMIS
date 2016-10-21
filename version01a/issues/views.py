@@ -80,11 +80,8 @@ def index_context(request):
     """index filtering and search"""
     # Check to see if index is limited via filter
     f = request.GET.get('filter')
-    print(f)
-    if f == "Archived":
-        index = Issue.objects.filter(archive=True)
-    elif f == "Current":
-        index = Issue.objects.filter(archive=False)
+    if f and f != "Any":
+        index = Issue.objects.filter(status=f)
     else:
         index = Issue.objects.all()
     # Check to see if index is limited via search

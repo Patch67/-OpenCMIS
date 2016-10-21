@@ -156,7 +156,7 @@ def behaviour_index(request, student_id):
 def baseline_detail(request, student_id):
     template = 'opencmis/baseline.html'
     context = {'student': get_object_or_404(Student, pk=student_id)}
-    # get_or_create on the next line to create the BaselineAssessment if it doesn't already exist
+    # TODO: Best practice for one to one relationships
     context['baseline_detail'] = BaselineAssessment.objects.get_or_create(pk=student_id)[0]
     context['student_list'] = Student.objects.all()
     context['tab'] = 'baseline'

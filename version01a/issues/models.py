@@ -15,8 +15,8 @@ class Issue(models.Model):
     STATUS_CHOICES = (('O', 'Open'), ('C', 'Closed'), ('H', 'On hold'))
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='O')
     creation_time = models.DateTimeField(default=timezone.now)
-    response_time = models.DateTimeField(blank=True)
-    complete_time = models.DateTimeField(blank=True)
+    response_time = models.DateTimeField(null=True, blank=True)
+    complete_time = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return self.title
@@ -39,6 +39,8 @@ class Update(models.Model):
         # Default page is details page of the parent issue
         return reverse('issue:detail', kwargs={'pk': str(self.issue)})
 
-    def save(self):
+    def save(self, *args, **kwargs):
         # TODO: Investigate save method as the place to do logging
-        pass
+        # Do something before saving
+        super(Update, self).save(*args, **kwargs)
+        # Do something after saving

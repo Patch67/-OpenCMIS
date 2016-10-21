@@ -1,0 +1,28 @@
+<Base>
+    <Menu>
+        <Home></Home>
+        <Student></Student>
+        <Documents></Documents>
+        <Tickets></Tickets>
+    </Menu>
+    <index></index>
+</Base>
+<StudentBase extends="Base">
+    <Index>
+        <Create></Create>
+        <Search></Search>
+        <Filter></Filter>
+        <List></List>>
+        <Pagination></Pagination>
+    </Index>
+    <Body>
+        <SubMenu>
+            <Detail></Detail>
+            <Create></Create>
+            <Update></Update>
+            <Delete></Delete>
+        </SubMenu>
+        <content></content>
+    </Body>
+</StudentBase>
+
