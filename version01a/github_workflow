@@ -60,3 +60,7 @@ Commit and Sync in Desktop.
 Everything is tickety boo.
 
 So what happens when the remote repo changes?
+Well I've got this.
+Desktop Sync brings down any changes straight into PyCharm and PyCharm get the changes instantly.
+So I've just made this change in Pycharm. Now Desktop Commit & Sync.
+Notice that the Pycharm file goes blue when it needs committing.
