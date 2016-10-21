@@ -81,3 +81,12 @@ Open Desktop and Sync. Things registers any local changes in the repo.
 Commit changes. This authorises the changes.
 Sync. This pushes the commits to the remote repo.
 
+Branches
+--------
+I now have three branches; Master, Development and Version01a.
+Version01a is essentially a fixed backup and should no longer be used or modified.
+Master and Development are currently the same however I am going to make changes in the Development branch on a daily basis.
+The Development branch will replace my USB stick.
+At the end of a development phase (weekly?) I will test the development branch and if all is well make a pull request to the Master.
+If all is well then the Master will always be a stable branch.
+The Development branch may get broken and if so I should have a way to just drop it and go back to the Master.
