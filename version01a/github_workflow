@@ -66,3 +66,18 @@ So I've just made this change in Pycharm. Now Desktop Commit & Sync.
 Notice that the Pycharm file goes blue when it needs committing.
 Once it has been committed it goes back to white.
 
+So here it is.
+Start
+--------
+Open Desktop and Sync. This brings down any changes from the remote repo.
+
+Work
+----
+Make your changes in PyCharm on the same Github folder as the repo.
+
+End
+---
+Open Desktop and Sync. Things registeres any local changes in the repo.
+Commit changes. This authorises the changes.
+Sync. This pushes the commits to the remote repo.
+
