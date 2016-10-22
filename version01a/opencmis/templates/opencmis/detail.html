@@ -1,85 +1,61 @@
-{% extends 'opencmis/base.html' %}
+{% extends 'opencmis/student-base.html' %}
 {% block title %}{{student}}{% endblock %}
-{% block body %}
-    <!-- This looks good but is not ideal -->
-    <!-- Might it not be better to steer this to some sort of view -->
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#home">Home</a></li>
-        <li><a href="#">Baseline Assessment</a></li>
-        <li><a href="#">Targets</a></li>
-        <li><a href="{% url 'opencmis:student-qualification' student.id %}">Qualifications</a></li>
-        <li><a href="#">Reviews</a></li>
-        <li><a href="#">Audiology</a></li>
-        <li><a href="#">Medical</a></li>
-        <li><a href="#">Behaviour</a></li><!-- This is the Django link way -->
-    </ul>
-
-    <h1>{{student}}</h1>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-4">
-                {% if student.photo %}
-                <img src="{{student.photo.url }}" class="img-responsive">
-                {% else %}
-                <div class="alert alert-warning" role="alert">
-                    <strong>No photo</strong>
-                </div>
-                {% endif %}
+{% block home-active %}active{% endblock %}
+{% block student-body %}
+    <div class="row">
+        <div class="col-md-4">
+            {% if student.photo %}
+            <img src="{{student.photo.url }}" class="img-responsive">
+            {% else %}
+            <div class="alert alert-warning" role="alert">
+                <strong>No photo</strong>
             </div>
-            <div class="col-md-8"></div>
+            {% endif %}
         </div>
-        <div class="row">
-            <div class="col-md-1">Date of Birth:</div>
-            <div class="col-md-11">{{student.date_of_birth}}</div>
+        <div class="col-md-8"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <a href="{% url 'opencmis:student-update' student.id %}">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </a>
+            {% if student.title.title != "Unknown" %}
+                {{student.title}}&nbsp;
+            {% endif %}
+            {{student.first_name}}&nbsp;{{student.last_name}}
         </div>
-        <div class="row">
-            <div class="col-md-1">Gender:</div>
-            <div class="col-md-11">{{student.gender}}</div>
-        </div>
-        <div class="row">
-            <div class="col-md-1">ULN:</div>
-            <div class="col-md-11">{{student.ULN}}</div>
-        </div>
-        <div class="row">
+    </div>
+    <div class="row">
+        <div class="col-md-2">Status:</div>
+        <div class="col-md-10">{{student.status.status}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">Date of Birth:</div>
+        <div class="col-md-10">{{student.date_of_birth}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">Gender:</div>
+        <div class="col-md-10">{{student.gender}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">Ethnicity:</div>
+        <div class="col-md-10">{{student.ethnicity}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">ULN:</div>
+        <div class="col-md-10">{{student.ULN}}</div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">House</div>
+        <div class="col-md-10">{{student.house}}</div>
+    </div>
 
-        </div>
+    <div class="row">
+        <div class="col-md-12">&nbsp;</div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
 
-        <div class="row"><div class="col-md-12">&nbsp;</div></div>
-        <div class="row">
-
-            <!-- Weirdness happening here -->
-            <!-- If I use A link update works but delete doesn't -->
-            <!-- if I use FORM POST update doesn't work but DELETE does -->
-            <!-- I think this has to do with GET and POST -->
-            <!-- I'm guessing GET is bad because it an be forged and POST is good
-            because it can have {* csrf_token %} protection -->
-            <!-- If this is the case I guess I need to make a FORM for update and
-            include all the data I need in hidden inputs like he's done with the student.id -->
-
-           <div class="col-md-1">
-                <form action="{% url 'opencmis:student-update' student.id %}" method="POST" style="display: inline;">
-                    {% csrf_token %}
-                    <input type="hidden" name="student_id" value="{{ student.id }}"/>
-                    <input type="hidden" name="student_first_name" value="{{ student.first_name }}"/>
-                    <button type="submit" class="btn btn-default btn-sm">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </button>
-                </form>
-            </div>
-
-            <div class="col-md-1">
-                <form action="{% url 'opencmis:student-delete' student.id %}" method="POST" style="display: inline;">
-                    {% csrf_token %}
-                    <input type="hidden" name="student_id" value="{{ student.id }}"/>
-                    <button type="submit" class="btn btn-default btn-sm">
-                        <span class="glyphicon glyphicon-trash"></span>
-                    </button>
-                </form>
-            </div>
-
-            <div class="col-md-10">
-                <a href="{% url 'opencmis:student-update' student.id %}"><span class="glyphicon glyphicon-pencil"></span> &nbsp;&nbsp;</a>
-            </div>
         </div>
     </div>
 {% endblock %}

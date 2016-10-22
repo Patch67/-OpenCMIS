@@ -1,0 +1,76 @@
+{% extends 'opencmis/base.html' %}
+{% block index %}
+<div class="hidden-print">
+    <!-- Add new issue -->
+    {% if perms.add_issue %}
+        <a href="{% url 'issue:create' %}">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>&nbsp;New Issue
+        </a>
+        <hr>
+    {% endif %}
+    <!-- Search form -->
+    <form id="searchform" action="" method="get" accept-charset="utf-8">
+        <fieldset>
+            <div class="form-group">
+                <label class="col-xs-4 col-form-label" for="filter">Status</label>
+                <div class="col-xs-8">
+                    <select class="form-control" id = "filter" name="filter">
+                        <option value="Any">Any</option>
+                        <option value="O">Open</option>
+                        <option value="C">Closed</option>
+                        <option value="H">On Hold</option>
+                    </select>
+                </div>
+
+                <input class="form-control" id="searchbox" name="q" type="text" placeholder="Search">
+                <button class="btn btn-primary" type="submit">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </button>
+
+            </div>
+        </fieldset>
+    </form>
+    <hr>
+    <!-- Index -->
+    {% for i in index %}
+        <a href="{% url 'issue:detail' i.id %}">{{i}}</a><br>
+    {% empty %}
+        <li>What? No issues?</li>
+    {% endfor %}
+    <!-- Pagination -->
+    {% if index.paginator.num_pages != 1 %}
+    <div class="pagination">
+        <span class="step-links">
+            {% if index.has_previous %}
+                <a href="?page=1">
+                    <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span>
+                </a>
+                <a href="?page={{ index.previous_page_number }}">
+                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                </a>
+            {% else %}
+                <span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            {% endif %}
+
+            <span class="current">
+                [ {{ index.number }} / {{ index.paginator.num_pages }} ]
+            </span>
+
+            {% if index.has_next %}
+                <a href="?page={{ index.next_page_number }}">
+                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                </a>
+                <a href="?page={{ index.paginator.num_pages }}">
+                    <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
+                </a>
+            {% else %}
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span>
+            {% endif %}
+        </span>
+        <div id=”results”></div>
+    </div>
+    {% endif %}
+    </div>
+{% endblock %}

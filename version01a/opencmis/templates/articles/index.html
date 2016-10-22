@@ -1,0 +1,25 @@
+{% extends 'opencmis/base.html' %}
+{% block title %}Article Index{% endblock %}
+{% block home-active %}active{% endblock %}
+{% block index %}
+    {% for article in article_list %}
+        <a href="{% url 'articles:detail' article.id %}{{tab}}">{{article}}</a><br>
+    {% empty %}
+        <div class="alert alert-warning" role="alert">
+            <strong>There are no articles to display.</strong>
+        </div>
+    {% endfor %}
+    <div class="row">
+            <a href="{% url 'articles:create' %}">
+                <span class="glyphicon glyphicon-plus-sign" area-hidden="true"></span>
+                &nbsp;&nbsp;Add Article
+            </a>
+    </div>
+{% endblock %}
+{% block body %}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">Welcome to Articles.</div>
+    <div class="panel-body">Feel free to add your own documentation</div>
+</div>
+{% endblock %}

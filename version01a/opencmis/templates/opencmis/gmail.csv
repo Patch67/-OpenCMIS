@@ -1,0 +1,5 @@
+firstname,lastname,email,password<br>
+{% for student in student_list %}
+{{student.first_name}},{{student.last_name}},{{student.first_name|lower}}.{{student.last_name|lower}}@cscd.ac.uk,password<br>
+{% endfor %}
+

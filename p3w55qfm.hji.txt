@@ -1,0 +1,54 @@
+﻿Merge remote-tracking branch 'refs/remotes/origin/I-want-this' into development
+
+# Conflicts:
+#	version01a/db.sqlite3
+#	version01a/opencmis/__pycache__/__init__.cpython-35.pyc
+#	version01a/opencmis/__pycache__/admin.cpython-35.pyc
+#	version01a/opencmis/__pycache__/apps.cpython-35.pyc
+#	version01a/opencmis/__pycache__/models.cpython-35.pyc
+#	version01a/opencmis/__pycache__/urls.cpython-35.pyc
+#	version01a/opencmis/__pycache__/views.cpython-35.pyc
+#	version01a/opencmis/migrations/__pycache__/0001_initial.cpython-35.pyc
+#	version01a/opencmis/migrations/__pycache__/0002_auto_20160816_1426.cpython-35.pyc
+#	version01a/opencmis/migrations/__pycache__/__init__.cpython-35.pyc
+#	version01a/version01a/__pycache__/__init__.cpython-35.pyc
+#	version01a/version01a/__pycache__/settings.cpython-35.pyc
+#	version01a/version01a/__pycache__/urls.cpython-35.pyc
+#	version01a/version01a/__pycache__/wsgi.cpython-35.pyc
+#
+# It looks like you may be committing a merge.
+# If this is not correct, please remove the file
+#	.git/MERGE_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch development
+# All conflicts fixed but you are still merging.
+#
+# Changes to be committed:
+#	new file:   musings.xml
+#	new file:   version01a/issues/migrations/0006_auto_20161010_1712.py
+#	modified:   version01a/issues/models.py
+#	modified:   version01a/issues/views.py
+#	deleted:    version01a/opencmis/__pycache__/__init__.cpython-35.pyc
+#	deleted:    version01a/opencmis/__pycache__/admin.cpython-35.pyc
+#	deleted:    version01a/opencmis/__pycache__/apps.cpython-35.pyc
+#	deleted:    version01a/opencmis/__pycache__/models.cpython-35.pyc
+#	deleted:    version01a/opencmis/__pycache__/urls.cpython-35.pyc
+#	deleted:    version01a/opencmis/__pycache__/views.cpython-35.pyc
+#	deleted:    version01a/opencmis/migrations/__pycache__/0001_initial.cpython-35.pyc
+#	deleted:    version01a/opencmis/migrations/__pycache__/0002_auto_20160816_1426.cpython-35.pyc
+#	deleted:    version01a/opencmis/migrations/__pycache__/__init__.cpython-35.pyc
+#	modified:   version01a/opencmis/templates/issue/issue-base.html
+#	modified:   version01a/opencmis/templates/opencmis/base.html
+#	modified:   version01a/opencmis/templates/opencmis/baseline.html
+#	modified:   version01a/opencmis/views.py
+#	deleted:    version01a/version01a/__pycache__/__init__.cpython-35.pyc
+#	deleted:    version01a/version01a/__pycache__/settings.cpython-35.pyc
+#	deleted:    version01a/version01a/__pycache__/urls.cpython-35.pyc
+#	deleted:    version01a/version01a/__pycache__/wsgi.cpython-35.pyc
+#	modified:   version01a/version01a/settings.py
+#
+

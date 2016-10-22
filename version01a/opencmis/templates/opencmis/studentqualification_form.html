@@ -1,0 +1,14 @@
+{% extends 'opencmis/student-base.html' %}
+{% block title %}Student Qualification{% endblock %}
+{% block body %}
+<div class="panel panel-primary">
+    <div class="panel-heading">{{ student }}</div>
+    <div class="panel-body">
+        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% include 'opencmis/form-template.html' %}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Message xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="SFA/ILR/2015-16" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="SFA/ILR/2015-16">
+	<Header>
+		<CollectionDetails>
+			<Collection>ILR</Collection>
+			<Year>1516</Year>
+			<FilePreparationDate>{% now "Y-m-d" %}</FilePreparationDate>
+		</CollectionDetails>
+		<Source>
+			<ProtectiveMarking>OFFICIAL-SENSITIVE-Personal</ProtectiveMarking>
+			<UKPRN>{{header.UKPRN}}</UKPRN>
+			<SoftwareSupplier>Own Software</SoftwareSupplier>
+			<SoftwarePackage>OpenCMIS</SoftwarePackage>
+			<Release>1</Release>
+			<SerialNo>01</SerialNo>
+			<DateTime>{% now "c" %}</DateTime>
+		</Source>
+	</Header>
+    {% for i in student_list %}
+    <Learner>
+        <LearnRefNumber>{{i.student.id}}</LearnRefNumber>
+		<ULN>{{i.student.uln}}</ULN>
+		<FamilyName>{{i.student.last_name}}</FamilyName>
+		<GivenNames>{{i.student.first_name}}</GivenNames>
+		<DateOfBirth>{{ i.student.date_of_birth|date:"Y-m-d" }}</DateOfBirth>
+		<Ethnicity>{{i.student.ethnicity.id}}</Ethnicity><!-- student.ethnicity.id not student.ethnicity -->
+		<Sex>{{i.student.gender}}</Sex>
+		<LLDDHealthProb>{{i.student.llddhealthproblem}}</LLDDHealthProb>
+        {% if i.student.ni_number %}
+            <NINumber>{{i.student.ni_number</NINumber>
+        {%endif %}
+		<Accom>{{i.student.accom}}</Accom>
+		<PlanLearnHours>{{i.student.plh}}</PlanLearnHours><!-- Planned Learning Hours -->
+		<PlanEEPHours>{{i.student.eep}}</PlanEEPHours>
+		<MathGrade>{{i.student.math}}</MathGrade>
+		<EngGrade>{{i.student.english}}</EngGrade>
+        <!-- Post Code -->
+		<LearnerContact>
+			<LocType>2</LocType><!-- Postcode -->
+			<ContType>2</ContType><!-- ContType 2 means current -->
+			<PostCode>{{i.student.post_code}}</PostCode>
+		</LearnerContact>
+        <!-- Address -->
+		<LearnerContact>
+			<LocType>1</LocType><!-- Address -->
+			<ContType>2</ContType>
+			<PostAdd>
+				<AddLine1>{{i.student.house}}</AddLine1>
+				<AddLine2>{{i.student.road}}</AddLine2>
+                <AddLine3>{{i.student.area}}</AddLine3>
+                <AddLine4>{{i.student.town}}</AddLine4>
+			</PostAdd>
+		</LearnerContact>
+
+        {% if i.student.telephone %}
+            <!-- Telephone -->
+            <LearnerContact>
+                <LocType>3</LocType><!-- Telephone -->
+                <ContType>2</ContType>
+                <PostCode>{{i.student.telephone}}</PostCode>
+            </LearnerContact>
+        {% endif %}
+        <!-- Learner FAM records -->
+		<LearnerFAM>
+			<LearnFAMType>LSR</LearnFAMType>
+			<LearnFAMCode>55</LearnFAMCode>
+		</LearnerFAM>
+		<LearnerFAM>
+			<LearnFAMType>EDF</LearnFAMType>
+			<LearnFAMCode>2</LearnFAMCode>
+		</LearnerFAM>
+		<LearnerFAM>
+			<LearnFAMType>MCF</LearnFAMType>
+			<LearnFAMCode>3</LearnFAMCode>
+		</LearnerFAM>
+		<LearnerFAM>
+			<LearnFAMType>FME</LearnFAMType>
+			<LearnFAMCode>2</LearnFAMCode>
+		</LearnerFAM>
+		<LearnerFAM>
+			<LearnFAMType>PPE</LearnFAMType>
+			<LearnFAMCode>2</LearnFAMCode>
+		</LearnerFAM>
+
+        {% for aim in i.aim_list %}
+        <LearningDelivery>
+			<LearnAimRef>{{aim.qualification.LAR}}</LearnAimRef><!--Need to use qualification.LAR -->
+			<AimType>{{aim.type}}</AimType>
+			<AimSeqNumber>{{aim.seq}}</AimSeqNumber>
+			<LearnStartDate>{{aim.start|date:"Y-m-d"}}</LearnStartDate>
+			<LearnPlanEndDate>{{aim.expected_end|date:"Y-m-d"}}</LearnPlanEndDate>
+			<FundModel>{{aim.fund}}</FundModel>
+			<ProgType>{{aim.prog}}</ProgType>
+			<DelLocPostCode>{{header.post_code}}</DelLocPostCode>
+			<CompStatus>{{aim.status}}</CompStatus>
+			<LearningDeliveryFAM>
+				<LearnDelFAMType>SOF</LearnDelFAMType>
+				<LearnDelFAMCode>105</LearnDelFAMCode>
+			</LearningDeliveryFAM>
+			<LearningDeliveryFAM>
+				<LearnDelFAMType>LSF</LearnDelFAMType>
+				<LearnDelFAMCode>1</LearnDelFAMCode>
+				<LearnDelFAMDateFrom>2015-10-01</LearnDelFAMDateFrom>
+				<LearnDelFAMDateTo>2016-09-30</LearnDelFAMDateTo>
+			</LearningDeliveryFAM>
+			<LearningDeliveryFAM>
+				<LearnDelFAMType>NSA</LearnDelFAMType>
+				<LearnDelFAMCode>4</LearnDelFAMCode>
+			</LearningDeliveryFAM>
+			<LearningDeliveryFAM>
+				<LearnDelFAMType>HHS</LearnDelFAMType>
+				<LearnDelFAMCode>1</LearnDelFAMCode>
+			</LearningDeliveryFAM>
+			<LearningDeliveryFAM>
+				<LearnDelFAMType>TBS</LearnDelFAMType>
+				<LearnDelFAMCode>1</LearnDelFAMCode>
+			</LearningDeliveryFAM>
+		</LearningDelivery>
+        {% endfor %}
+    </Learner>
+    {% endfor %}
+</Message>

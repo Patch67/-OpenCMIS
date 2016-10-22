@@ -75,3 +75,45 @@ fabric.properties
 # modules.xml
 # .idea/misc.xml 
 # *.ipr
+version01a/articles/__pycache__/
+version01a/articles/migrations/__pycache__/
+version01a/issues/__pycache__/
+version01a/issues/migrations/0001_initial.py
+version01a/issues/migrations/0002_auto_20161009_1000.py
+version01a/issues/migrations/0003_update.py
+version01a/issues/migrations/0004_auto_20161009_2026.py
+version01a/issues/migrations/0005_auto_20161010_1150.py
+version01a/issues/migrations/__pycache__/
+version01a/opencmis/migrations/0003_studentextras.py
+version01a/opencmis/migrations/0004_baselineassessment.py
+version01a/opencmis/migrations/0005_ethnicity_staff.py
+version01a/opencmis/migrations/0006_remove_ethnicity_code.py
+version01a/opencmis/migrations/0007_student_ethnicity.py
+version01a/opencmis/migrations/0008_auto_20160912_1306.py
+version01a/opencmis/migrations/0009_auto_20160912_1436.py
+version01a/opencmis/migrations/0010_student_title.py
+version01a/opencmis/migrations/0011_auto_20160913_1259.py
+version01a/opencmis/migrations/0012_auto_20160913_1329.py
+version01a/opencmis/migrations/0013_auto_20160913_1405.py
+version01a/opencmis/migrations/0014_organisation.py
+version01a/opencmis/migrations/0015_auto_20161008_1413.py
+version01a/opencmis/migrations/__pycache__/0003_studentextras.cpython-35.pyc
+version01a/opencmis/migrations/__pycache__/0004_baselineassessment.cpython-35.pyc
+version01a/opencmis/migrations/__pycache__/0005_ethnicity_staff.cpython-35.pyc
+version01a/opencmis/migrations/__pycache__/0006_remove_ethnicity_code.cpython-35.pyc
+version01a/opencmis/migrations/__pycache__/0007_student_ethnicity.cpython-35.pyc
+version01a/opencmis/migrations/__pycache__/0008_auto_20160912_1306.cpython-35.pyc
+version01a/opencmis/migrations/__pycache__/0009_auto_20160912_1436.cpython-35.pyc
+version01a/opencmis/migrations/__pycache__/0010_student_title.cpython-35.pyc
+version01a/opencmis/migrations/__pycache__/0011_auto_20160913_1259.cpython-35.pyc
+version01a/opencmis/migrations/__pycache__/0012_auto_20160913_1329.cpython-35.pyc
+version01a/opencmis/migrations/__pycache__/0013_auto_20160913_1405.cpython-35.pyc
+version01a/opencmis/migrations/__pycache__/0014_organisation.cpython-35.pyc
+version01a/opencmis/migrations/__pycache__/0015_auto_20161008_1413.cpython-35.pyc
+version01a/static/static/
+version01a/timetable/__pycache__/
+version01a/timetable/migrations/__pycache__/
+version01a/version01a/__pycache__/settings.cpython-35.pyc.55849776
+*.pyc
+*.pyc
+version01a/opencmis/migrations/__pycache__/0001_initial.cpython-35.pyc

@@ -32,6 +32,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'opencmis.apps.OpencmisConfig',
+    'timetable.apps.TimetableConfig',
+    'articles.apps.ArticlesConfig',
+    'issues.apps.IssuesConfig',
     'import_export',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
-MIDDLEWARE = [
+MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -122,6 +125,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 # Need the following line to allow import_export to initialise
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+LOGIN_REDIRECT_URL = '/opencmis/student/'
+

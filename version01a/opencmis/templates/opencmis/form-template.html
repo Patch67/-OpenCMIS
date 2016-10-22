@@ -1,9 +1,14 @@
+{% load templates %}
 {% for field in form %}
+    {% comment %}
+    Try to use as much Bootstrap formatting as is possible
+    But {{field}} autogens controls making it difficult to add classes
+    {% endcomment %}
     <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <span class="text-danger small">{{ field.errors }}</span>
-        </div>
-        <label class="control-label col-sm-2">{{ field.label_tag }}</label>
-        <div class="col-sm-10">{{ field }}</div>
+        <span class="text-danger small">{{ field.errors }}</span>
+        <label class="control-label" for="{{field.id_for_label}}">
+            {{ field.label }}
+        </label>
+        {{ field|add_css:"form-control" }}
     </div>
 {% endfor %}

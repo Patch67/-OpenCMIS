@@ -1,0 +1,33 @@
+{% extends 'opencmis/base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block submenu %}
+    <div class="panel panel-primary">
+        <div class="panel-heading"><strong>Dashboard</strong></div>
+        <div class="panel-body">
+            <div class="panel panel-default">
+                <div class="panel-heading">Key Performance Indicators</div>
+                <div class="panel-body">
+                    <!--This is how best way to do KPI's so far, copy this for the others-->
+                    <!--Procedurise this KPI so any KPI is read in and processed without repeating code-->
+                    {% for kpi in kpi_list %}
+                    <div class="panel panel-{{kpi.alert}}">
+                        <div class="panel-heading">{{kpi.title}}&nbsp;KPI</div>
+                        <div class="panel-body">
+                            {{kpi.number}} out of {{kpi.total}} {{kpi.text}}<br>
+                            {% if kpi.is_progress_bar %}
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-{{kpi.alert}}" role="progressbar"
+                                     aria-valuenow="{{kpi.number}}" aria-valuemin="0" aria-valuemax="{{kpi.number}}"
+                                     style="width: {{kpi.percent}}%; ">
+                                    {{kpi.number}} / {{kpi.total}}
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

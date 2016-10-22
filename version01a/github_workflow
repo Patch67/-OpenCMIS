@@ -1,0 +1,102 @@
+OK.
+So I've got two branches now:-
+- Development
+- Version01a
+
+I've also got three potentially confusing Version controls bits: -
+- Github website
+- Guthub desktop
+- Pycharm VCS
+
+I think it is less confusing if I don't use PyCharm VCS.
+It's probably also better to work directly from the local Github repo.
+
+In other words openPyCharm directly on the local Github repo.
+This way any changes made are already reflected in the Github desktop.
+
+When I've finished working for the day I must make a pull request from the Github desktop.
+I should then go to Github website to commit the pull request.
+
+This will mean that at the end of the day. The Github website has the latest changes.
+
+Start work
+----------
+Make sure I've downloaded the development branch from  the website to the desktop.
+
+Work
+----
+Work directly in the local github repo. Open with PyCharm from that location.
+
+End Work
+--------
+In Github desktop make a pull request to update the webbased development branch with the latest changes.
+
+
+--------
+Still not got it.
+--------
+I make changes in PyCharm but these changes are not reflected in Desktop until I do VCS Add.
+The file is in red until I VSC Add.
+Then the file changes to green.
+Now PyCharm and desktop are in Sync.
+However Desktop and Web are not the same.
+I can't do a commit from Development to Development because Desktop says they are the same.
+I can only do a commit to another branch, i.e. Version01a but I don't want to do that.
+Version 01a is a backup copy and should not be changed.
+
+I may have got it.
+------------------
+Make changes on PyCharm.
+Look on Desktop (Left hand side).
+It shows there are changes.
+Do a local commit.
+Do a Sync.
+Then the local repo and the remote repo are the same.
+
+This is it
+----------
+Change in PyCharm.
+Commit and Sync in Desktop.
+Everything is tickety boo.
+
+So what happens when the remote repo changes?
+Well I've got this.
+Desktop Sync brings down any changes straight into PyCharm and PyCharm get the changes instantly.
+So I've just made this change in Pycharm. Now Desktop Commit & Sync.
+Notice that the Pycharm file goes blue when it needs committing.
+Once it has been committed it goes back to white.
+
+So here it is.
+Start
+--------
+Open Desktop and Sync. This brings down any changes from the remote repo.
+
+Work
+----
+Make your changes in PyCharm on the same Github folder as the repo.
+
+End
+---
+Open Desktop and Sync. Things registers any local changes in the repo.
+Commit changes. This authorises the changes.
+Sync. This pushes the commits to the remote repo.
+
+Branches
+--------
+I now have three branches; Master, Development and Version01a.
+Version01a is essentially a fixed backup and should no longer be used or modified.
+Master and Development are currently the same however I am going to make changes in the Development branch on a daily basis.
+The Development branch will replace my USB stick.
+At the end of a development phase (weekly?) I will test the development branch and if all is well make a pull request to the Master.
+If all is well then the Master will always be a stable branch.
+The Development branch may get broken and if so I should have a way to just drop it and go back to the Master.
+
+Cloning
+-------
+git clone https://github.com/Paych67/OpenCMIS3
+
+This gets the default branch.
+
+Note This is not the Development branch it is the Master branch.
+So you must create a pull request to merge the Development and the Master branches.
+

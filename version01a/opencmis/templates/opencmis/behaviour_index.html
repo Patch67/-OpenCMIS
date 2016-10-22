@@ -1,0 +1,14 @@
+{% extends 'opencmis/student-base.html' %}
+{% block title %}{{ student}}{% endblock %}
+{% block behaviour-active %}active{% endblock %}
+{% block student-body %}
+    {% for item in behaviour_list %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-10">{{item.issue}}</div><div class="col-md-2">Date</div>
+            </div>
+        </div>
+    {% empty %}
+        <div class="alert alert-warning">There are no issues for this student.</div>
+    {% endfor %}
+{% endblock %}
