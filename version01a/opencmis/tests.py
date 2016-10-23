@@ -34,18 +34,54 @@ class StudentTestRead(TestCase):
     Test to see if we can create and then read the student
     """
     user = User
+    reader = User
     editor = User
     creator = User
-    deletor = User
+    deleter = User
 
     def setUp(self):
         self.c = Client()
 
         # Create a user
-        user  = User.objects.create_user(username='user', password='pass')
-        editor = User.objects.create_user(username='editor', password='pass')
-        creator = User.objects.create_user(username='creator', password='pass')
-        deletor = User.objects.create_user(username='deletor', password='pass')
+        self.user = User.objects.create_user(username='user', password='pass')
+        self.user.save()
+
+        # Get content handle for permissions
+        content_type = ContentType.objects.get_for_model(Student)
+
+        '''
+        # List all available student permissions
+        print('Permission List')
+        print('codename, name')
+        perms = Permission.objects.filter(content_type=content_type)
+        for perm in perms:
+            print('{0}, {1}'.format(perm.codename, perm.name))
+        print('End permission list')
+        '''
+
+        # Create a reader
+        self.reader = User.objects.create_user(username='reader', password='pass')
+        permission = Permission.objects.get(content_type=content_type, codename='view_student')
+        self.reader.user_permissions.add(permission)
+        self.reader.save()
+
+        # Create an editor
+        self.editor = User.objects.create_user(username='editor', password='pass')
+        permission = Permission.objects.get(content_type=content_type, codename='change_student')
+        self.editor.user_permissions.add(permission)
+        self.editor.save()
+
+        # Create a creator
+        self.creator = User.objects.create_user(username='creator', password='pass')
+        permission = Permission.objects.get(content_type=content_type, codename='add_student')
+        self.creator.user_permissions.add(permission)
+        self.creator.save()
+
+        # Create deleter
+        self.deleter = User.objects.create_user(username='deleter', password='pass')
+        permission = Permission.objects.get(content_type=content_type, codename='delete_student')
+        self.deleter.user_permissions.add(permission)
+        self.deleter.save()
 
         # Create a title to use in Student
         title = Title()
@@ -101,25 +137,18 @@ class StudentTestRead(TestCase):
         # Not logged in (guest)
         response = self.client.get(url)
         self.assertRedirects(response, '/login/?redirect_to=/opencmis/student/')
+        response = self.client.get('/opencmis/dashboard/', follow=True)
+        self.assertEqual(response.status_code, 404, "Should not allow access as user not logged in")
 
-        # User logged in but without permission
+        # logged in with no permissions
         self.c.login(username='user', password='pass')
-        # TODO: If logged in but without permission redirect to a you don't have permission for that page
+        response = self.client.get(url)
         self.assertRedirects(response, '/login/?redirect_to=/opencmis/student/')
 
-        # User logged in with permission
-        content_type = ContentType.objects.get_for_model(Student)
-        permissions = Permission.objects.filter(content_type=content_type)
-        for perm in permissions:
-            print(perm)
-        permission = Permission.objects.get(content_type=content_type, codename='student_reader')
-        self.user.user_permissions.add(permission)
-
-        self.client.login(username='user', password='pass')
+        # Student Reader logged in
+        self.client.login(username='reader', password='pass')
         response = self.client.get(url)
-        self.assertContains(response, "What to look for")
-
-
+        self.assertContains(response, "Jacob Percival")
 
         self.assertEqual(Student.objects.count(), 1)
         self.assertEqual(Title.objects.first().title, 'Mr')
@@ -131,6 +160,7 @@ class StudentTestRead(TestCase):
         self.assertEqual(Qualification.objects.first().title, 'O Level Maths')
         self.assertEqual(StudentQualification.objects.first().student.first_name, 'Jacob')
 
+        # Test responses to various URL gets
         sid = Student.objects.first().id
         items = [
                  ['/opencmis/student/', 200],
@@ -148,7 +178,7 @@ class StudentTestRead(TestCase):
             response = self.client.get(item[0], follow=True)
             self.assertEqual(response.status_code, item[1], item[0])
         response = self.client.get('/opencmis/dashboard/', follow=True)
-        self.assertEqual(response.status_code, 404, "Should not allow access as user not logged in")
+        self.assertEqual(response.status_code, 200, "Should not allow access as user not logged in")
 
 
 class MakeAlertTest(TestCase):

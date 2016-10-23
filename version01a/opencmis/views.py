@@ -309,7 +309,6 @@ def dashboard(request):
     ]
 
     # Put the list in a dictionary context, add user as another top level dictionary item so it can be displayed on page
-    print(request.user)
     context = {'kpi_list': kpi_list, 'user': request.user}
 
     return render(request, template, context)

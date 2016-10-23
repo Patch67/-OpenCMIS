@@ -32,6 +32,11 @@ class Student(models.Model):
         # return reverse('opencmis.views.detail', args=[str(self.id)])
         return u'/opencmis/student/%d' % self.id
 
+    class Meta:
+        permissions = (
+            ("view_student", "Can see students"),
+        )
+
 
 class StudentExtras(models.Model):
     student = models.OneToOneField('Student', on_delete=models.CASCADE, primary_key=True)
