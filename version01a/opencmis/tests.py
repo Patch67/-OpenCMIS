@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.test import Client
-from django.core.urlresolvers import reverse
-from .urls import urlpatterns
+from django.contrib.auth.models import User, Permission
+from django.contrib.contenttypes.models import ContentType
 
 from .models import Student, Title, Ethnicity, Status, BaselineEntry, BaselineValue, Qualification, StudentQualification
 from .views import make_alert
@@ -33,8 +33,14 @@ class StudentTestRead(TestCase):
     """
     Test to see if we can create and then read the student
     """
+    user = User
+
     def setUp(self):
         self.c = Client()
+
+        # Create a user
+        user = User.objects.create_user(username='user', password='pass')
+
         # Create a title to use in Student
         title = Title()
         title.title = 'Mr'
@@ -84,6 +90,29 @@ class StudentTestRead(TestCase):
         sq.save()
 
     def test_create(self):
+        url = '/opencmis/student/'
+
+        # User not logged in (guest)
+        response = self.client.get(url)
+        self.assertRedirects(response, '/login/?redirect_to=/opencmis/student/')
+
+        # User logged in but without permission
+        self.c.login(username='user', password='pass')
+        # TODO: If logged in but without permission redirect to a you don't have permission for that page
+        self.assertRedirects(response, '/login/?redirect_to=/opencmis/student/')
+
+        # User logged in with permission
+        content_type = ContentType.objects.get_for_model(Student)
+        permissions = Permission.objects.filter(content_type=content_type)
+        for perm in permissions:
+            print(perm)
+        permission = Permission.objects.get(content_type=content_type, codename='student_reader')
+        self.user.user_permissions.add(permission)
+
+        self.client.login(username='user', password='pass')
+        response = self.client.get(url)
+        self.assertContains(response, "What to look for")
+
         self.assertEqual(Student.objects.count(), 1)
         self.assertEqual(Title.objects.first().title, 'Mr')
         self.assertEqual(Ethnicity.objects.first().value, 'White')
