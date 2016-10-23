@@ -34,12 +34,18 @@ class StudentTestRead(TestCase):
     Test to see if we can create and then read the student
     """
     user = User
+    editor = User
+    creator = User
+    deletor = User
 
     def setUp(self):
         self.c = Client()
 
         # Create a user
-        user = User.objects.create_user(username='user', password='pass')
+        user  = User.objects.create_user(username='user', password='pass')
+        editor = User.objects.create_user(username='editor', password='pass')
+        creator = User.objects.create_user(username='creator', password='pass')
+        deletor = User.objects.create_user(username='deletor', password='pass')
 
         # Create a title to use in Student
         title = Title()
@@ -92,7 +98,7 @@ class StudentTestRead(TestCase):
     def test_create(self):
         url = '/opencmis/student/'
 
-        # User not logged in (guest)
+        # Not logged in (guest)
         response = self.client.get(url)
         self.assertRedirects(response, '/login/?redirect_to=/opencmis/student/')
 
@@ -112,6 +118,8 @@ class StudentTestRead(TestCase):
         self.client.login(username='user', password='pass')
         response = self.client.get(url)
         self.assertContains(response, "What to look for")
+
+
 
         self.assertEqual(Student.objects.count(), 1)
         self.assertEqual(Title.objects.first().title, 'Mr')
