@@ -20,7 +20,7 @@ class IndexView(LoginRequiredMixin, ListView):
     model = Student
     template_name = 'opencmis/index.html'
     context_object_name = 'student_list'
-    permission_required = 'opencmis.student_reader'
+    permission_required = 'opencmis.view_student'
 
     def get_context_data(self, **kwargs):
         """Customise the context ready to supply to the template"""
@@ -37,6 +37,7 @@ class IndexView(LoginRequiredMixin, ListView):
 
 class DetailView(DetailView):
     model = Student
+    permission_required = 'opencmis.view_student'
     template_name = 'opencmis/detail.html'
 
     def get_context_data(self, **kwargs):
@@ -47,6 +48,7 @@ class DetailView(DetailView):
 
 class StudentCreate(CreateView):
     model = Student
+    permission_required = 'opencmis.add_student'
     fields = ['status', 'title', 'first_name', 'last_name', 'date_of_birth',
               'gender', 'ethnicity', 'ULN',
               'house', 'road', 'area', 'town', 'post_code']
@@ -63,6 +65,7 @@ class StudentCreate(CreateView):
 
 class StudentUpdate(UpdateView):
     model = Student
+    permission_required = 'opencmis.change_student'
     fields = ['status', 'title', 'first_name', 'last_name', 'date_of_birth',
               'ethnicity', 'gender', 'ULN',
               'house', 'road', 'area', 'town', 'post_code']
@@ -77,6 +80,7 @@ class StudentUpdate(UpdateView):
 
 class StudentDelete(DeleteView):
     model = Student
+    permission_required = 'opencmis.delete_student'
     success_url = reverse_lazy('opencmis:index')
 
     def get_context_data(self, **kwargs):
