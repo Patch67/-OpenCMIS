@@ -1,0 +1,18 @@
+Ok so I thought I'd mastered GitHub but I hadn't.
+
+I think that using git from PyCharm, Desktop GitHub and Web Github is confusing.
+There is a a video on YouTube showing how to do it all with git commands.
+
+git clone # downloads an entire repository. Only use this at the start of a new project.
+git pull # Pulls down all the latest changes from GitHub.
+git status # Tells you whats different between your local folder and the GitHub repository.
+git commit # Tells GitHub that you've made some changes
+git push # Pushes all your changes into GitHub.
+
+Notice that using these commands requires the command line which requires the git.exe to be
+placed into your path.
+
+path %PATH%; C:\Users\Patrick\AppData\Local\GitHub\PortableGit_284a859b0e6deba86edc624fef1e4db2aa8241a9\cmd
+
+So now you can use Git commands from the command line.
+
