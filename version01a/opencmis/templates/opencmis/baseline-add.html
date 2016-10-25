@@ -14,9 +14,14 @@
                         <!-- |add:"0" forces a string to int.-->
                         <!-- |add:"0" simply adds 0 if it is already an int -->
                         {% if e.entry.id|add:"0" == header|add:"0" %}
-                            <textarea rows="4" cols="50">
-
-                            </textarea>
+                        <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="comment">Comment:</label>
+                                <textarea class="form-control" rows="4" cols="50" id="comment"></textarea>
+                            </div>
+                            <button type="button" class="btn btn-primary">Save</button>
+                        </form>
                         {% else %}
                             {{i.text|linebreaks}}
                         {% endif %}

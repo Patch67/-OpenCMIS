@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import Student, Teacher, Building, Room, Qualification, StudentQualification,\
-    Behaviour, BaselineAssessment, BaselineEntry, BaselineValue, Ethnicity, Status, Title
+    Behaviour, BaselineEntry, BaselineValue, Ethnicity, Status, Title
 
 
 from django.contrib import admin
@@ -124,18 +124,29 @@ class TitleAdmin(ImportExportModelAdmin):
     pass
 
 
+# BaselineEntry Import / Export
+class BaselineEntryResource(resources.ModelResource):
+    class Meta:
+        model = BaselineEntry
+        fields = ('heading', 'blurb')
+        export_order = ('heading', 'blurb')
+
+
+class BaselineEntryAdmin(ImportExportModelAdmin):
+    pass
+
+
 # See https://django-import-export.readthedocs.io/en/latest/getting_started.html
 # Import_export will not work until you register StudentAdmin with admin site
-admin.site.register(BaselineEntry)
+admin.site.register(BaselineEntry, BaselineEntryAdmin)
 admin.site.register(BaselineValue)
 admin.site.register(Student, StudentAdmin)  # Tested - working
 admin.site.register(Teacher, TeacherAdmin)
-admin.site.register(Building, BuildingAdmin) # Imported Tested PAB 11/08/2016
-admin.site.register(Room, RoomAdmin) # Imported Tested PAB 11/08/2016
-admin.site.register(Qualification, QualificationAdmin) # Imported Tested PAB 11/08/2016
+admin.site.register(Building, BuildingAdmin)  # Imported Tested PAB 11/08/2016
+admin.site.register(Room, RoomAdmin)  # Imported Tested PAB 11/08/2016
+admin.site.register(Qualification, QualificationAdmin)  # Imported Tested PAB 11/08/2016
 admin.site.register(StudentQualification)
 admin.site.register(Behaviour)
-admin.site.register(BaselineAssessment)
 admin.site.register(Title, TitleAdmin)
 admin.site.register(Ethnicity, EthnicityAdmin)
 admin.site.register(Status, StatusAdmin)

@@ -32,6 +32,11 @@ class Student(models.Model):
         # return reverse('opencmis.views.detail', args=[str(self.id)])
         return u'/opencmis/student/%d' % self.id
 
+    class Meta:
+        permissions = (
+            ("view_student", "Can see students"),
+        )
+
 
 class StudentExtras(models.Model):
     student = models.OneToOneField('Student', on_delete=models.CASCADE, primary_key=True)
@@ -82,43 +87,32 @@ class StudentQualification(models.Model):
 
 
 class BaselineEntry(models.Model):
+    """ The database has text entries for all the data from Debbie and Nicola's word document """
     heading = models.CharField(max_length=80)
     blurb = models.TextField()
 
     def __str__(self):
-        return "%s" %self.heading
+        return "%s" % self.heading
 
     class Meta:
         verbose_name_plural = 'BaselineEntries'
 
 
 class BaselineValue(models.Model):
-    student = models.ForeignKey('Student')
-    baseline = models.ForeignKey('BaselineEntry')
-    week_choices = ((1, 'Week 1'), (2, 'Week 2'), (3, 'Week 3'), (4, 'Week 4'), (5, 'Week 5'), (6, 'Week 6'))
-    week = models.IntegerField(choices=week_choices, default=1)
+    """ Every baseline entry will have one of these"""
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    baseline = models.ForeignKey(BaselineEntry, on_delete=models.CASCADE)
+    WEEKS_CHOICES = ((1, 'Week 1'), (2, 'Week 2'), (3, 'Week 3'), (4, 'Week 4'), (5, 'Week 5'), (6, 'Week 6'))
+    week = models.IntegerField(choices=WEEKS_CHOICES, default=1)
     text = models.TextField()
-    place = models.CharField(max_length=20)
-    user = models.ForeignKey(User)
-    date = models.DateTimeField(auto_now=True)
+    # date - future maybe
+    # user - future maybe
 
     def __str__(self):
-        return "%s - %s : week %d" % (self.student, self.baseline, self.week)
+        return "{0} {1} {2}".format(self.student, self.baseline, self.week)
 
     def get_absolute_url(self):
         return u'/opencmis/student/%d/baseline/' % self.student_id
-
-
-class BaselineAssessment(models.Model):
-    """ A one to one record allowing extra details to be added to basic student"""
-    student = models.OneToOneField('Student', on_delete=models.CASCADE, primary_key=True)
-    blurb = models.TextField(blank=True)
-    text = models.TextField(blank=True)
-    user = models.ForeignKey(User, null=True, blank=True)
-    date = models.DateTimeField(auto_now=True, blank=True)
-
-    def __str__(self):
-        return "%s : %s" %(self.student, self.date)
 
 
 class Building(models.Model):

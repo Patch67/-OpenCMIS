@@ -104,14 +104,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# PAB: 20/10/2016 Added following section to try to implement LDAP.
-# https://pythonhosted.org/django-auth-ldap/install.html
-AUTHENTICATION_BACKENDS = (
-    'django_auth_ldap.backend.LDAPBackend',
-    'django.contrib.auth.backends.ModelBackend',
-)
-AUTH_LDAP_SERVER_URI = "ldap://mammoth.ddt.local"  # Note: possibly add auroch.ddt.local too
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/

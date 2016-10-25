@@ -16,9 +16,16 @@
     </div>
     <div class="row">
         <div class="col-md-2">
+            {% if perms.opencmis.can_change %}
             <a href="{% url 'opencmis:student-update' student.id %}">
                 <span class="glyphicon glyphicon-pencil"></span>
             </a>
+            {% endif %}
+            {% if perms.opencmis.can_delete %}
+            <a href="{% url 'opencmis:student-delete' student.id %}">
+                <span class="glyphicon glyphicon-remove-circle"></span>
+            </a>
+            {% endif %}
             {% if student.title.title != "Unknown" %}
                 {{student.title}}&nbsp;
             {% endif %}

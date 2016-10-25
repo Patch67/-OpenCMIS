@@ -2,13 +2,13 @@ from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
-from .models import Student, Status, StudentQualification, Behaviour, BaselineAssessment, Qualification,\
+from .models import Student, Status, StudentQualification, Behaviour, Qualification,\
     BaselineValue, BaselineEntry, Header
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 import csv
 from django.http import HttpResponse
-from django.template import loader, Context
+from django.template import loader
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 
@@ -20,7 +20,7 @@ class IndexView(LoginRequiredMixin, ListView):
     model = Student
     template_name = 'opencmis/index.html'
     context_object_name = 'student_list'
-    permission_required = 'opencmis.student_reader'
+    permission_required = 'opencmis.view_student'
 
     def get_context_data(self, **kwargs):
         """Customise the context ready to supply to the template"""
@@ -37,6 +37,7 @@ class IndexView(LoginRequiredMixin, ListView):
 
 class DetailView(DetailView):
     model = Student
+    permission_required = 'opencmis.view_student'
     template_name = 'opencmis/detail.html'
 
     def get_context_data(self, **kwargs):
@@ -47,6 +48,7 @@ class DetailView(DetailView):
 
 class StudentCreate(CreateView):
     model = Student
+    permission_required = 'opencmis.add_student'
     fields = ['status', 'title', 'first_name', 'last_name', 'date_of_birth',
               'gender', 'ethnicity', 'ULN',
               'house', 'road', 'area', 'town', 'post_code']
@@ -63,6 +65,7 @@ class StudentCreate(CreateView):
 
 class StudentUpdate(UpdateView):
     model = Student
+    permission_required = 'opencmis.change_student'
     fields = ['status', 'title', 'first_name', 'last_name', 'date_of_birth',
               'ethnicity', 'gender', 'ULN',
               'house', 'road', 'area', 'town', 'post_code']
@@ -77,6 +80,7 @@ class StudentUpdate(UpdateView):
 
 class StudentDelete(DeleteView):
     model = Student
+    permission_required = 'opencmis.delete_student'
     success_url = reverse_lazy('opencmis:index')
 
     def get_context_data(self, **kwargs):
@@ -105,7 +109,7 @@ class StudentQualificationList(ListView):
 
 class StudentQualificationAdd(CreateView):
     model = StudentQualification
-    fields = ['student', 'qualification', 'start', 'expected_end']
+    fields = ['qualification', 'start', 'expected_end']
 
     def get_object(self):
         return get_object_or_404(StudentQualification, pk=self.kwargs['studentqualification_id'])
@@ -153,17 +157,6 @@ def behaviour_index(request, student_id):
     return render(request, template, context)
 
 
-def baseline_detail(request, student_id):
-    template = 'opencmis/baseline.html'
-    context = {'student': get_object_or_404(Student, pk=student_id)}
-    # TODO: Best practice for one to one relationships
-    context['baseline_detail'] = BaselineAssessment.objects.get_or_create(pk=student_id)[0]
-    context['student_list'] = Student.objects.all()
-    context['tab'] = 'baseline'
-    context['index'] = index_context(request)
-    return render(request, template, context)
-
-
 def gmail(request):
     # Create the HttpResponse object with the appropriate CSV header.
     response = HttpResponse(content_type='text/csv')
@@ -193,7 +186,8 @@ def ILR(request):
         # It return columns from both the StudentQualification and the Qualification tables.
         # Note to access StudentQualification columns use field,
         # to access Qualification columns use qualification.field.
-        item['aim_list'] = StudentQualification.objects.filter(student=student.id).select_related('qualification')
+        item['aim_list'] = StudentQualification.objects.filter(
+            student=student.id).select_related('qualification')
         my_list.append(item)
     context['student_list'] = my_list
     # Set up response as a file download
@@ -211,17 +205,14 @@ class BaselineIndex(ListView):
     template_name = 'opencmis/baseline.html'
     context_object_name = 'item_list'
 
-    def get_object(self):
-        return get_object_or_404(BaselineAssessment, pk=self.kwargs['student_id'])
-
     def get_context_data(self, **kwargs):
         context = super(BaselineIndex, self).get_context_data(**kwargs)
-        context['student_list'] = Student.objects.all()
         context['student'] = get_object_or_404(Student, pk=self.kwargs['student_id'])
         my_list = []
         for entry in BaselineEntry.objects.all():
             item = {'entry': entry}
-            item['data'] = BaselineValue.objects.filter(student=self.kwargs['student_id'], baseline=entry).order_by('week')
+            item['data'] = BaselineValue.objects.filter(student=self.kwargs['student_id'],
+                                                        baseline=entry).order_by('week')
             my_list.append(item)
         context['baseline_list'] = my_list
         context['tab'] = 'baseline'
@@ -235,14 +226,13 @@ class BaselineIndex(ListView):
 class BaselineAdd(CreateView):
     model = BaselineValue
     template_name = 'opencmis/baseline-add.html'
-    fields = ['text', 'place']
+    fields = ['text']
 
     def get_object(self):
         return get_object_or_404(BaselineValue, pk=self.kwargs['pk'])
 
     def get_context_data(self, **kwargs):
         context = super(BaselineAdd, self).get_context_data(**kwargs)
-        context['student_list'] = Student.objects.all()
 
         context['student'] = get_object_or_404(Student, pk=self.kwargs['student_id'])
         my_list = []
@@ -303,8 +293,10 @@ def dashboard(request):
     student_numbers = Student.objects.count()
 
     # Baseline Assessment KPI
-    number = BaselineAssessment.objects.count()
-    baseline_kpi = make_kpi("Baseline Assessment", student_numbers, number, "students have a valid Baseline Assessment")
+    baseline_possible = Student.objects.count() * BaselineEntry.objects.count() * 6
+    baseline_actual = BaselineValue.objects.count()
+    baseline_kpi = make_kpi("Baseline Assessment", baseline_possible, baseline_actual,
+                            "students have a valid Baseline Assessment")
 
     # Qualification KPI
     number = StudentQualification.objects.values_list('student', flat=True).distinct().count()
@@ -328,6 +320,7 @@ def dashboard(request):
 
 def index_context(request):
     """index filtering"""
+
     # TODO Make this Ajax and you're cooking on gas baby
     # TODO: Make the search form remember the value of the previous search items, at least the Drop Box
 
