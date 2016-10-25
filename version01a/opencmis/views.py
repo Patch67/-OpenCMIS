@@ -35,13 +35,13 @@ class IndexView(LoginRequiredMixin, ListView):
         return Student.objects.all()
 
 
-class DetailView(DetailView):
+class StudentView(DetailView):
     model = Student
     permission_required = 'opencmis.view_student'
     template_name = 'opencmis/detail.html'
 
     def get_context_data(self, **kwargs):
-        context = super(DetailView, self).get_context_data(**kwargs)
+        context = super(StudentView, self).get_context_data(**kwargs)
         context['index'] = index_context(self.request)
         return context
 
@@ -69,6 +69,7 @@ class StudentUpdate(UpdateView):
     fields = ['status', 'title', 'first_name', 'last_name', 'date_of_birth',
               'ethnicity', 'gender', 'ULN',
               'house', 'road', 'area', 'town', 'post_code']
+
     def get_object(self):
         return get_object_or_404(Student, pk=self.kwargs['pk'])
 

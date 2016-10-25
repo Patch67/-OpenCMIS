@@ -17,7 +17,7 @@ urlpatterns = [
 
     # /opencmis/student/232/
     url(r'student/(?P<pk>[0-9]+)/$',
-        views.DetailView.as_view(),
+        views.StudentView.as_view(),
         name='student-detail'),
 
     # /opencmis/student/gmail
