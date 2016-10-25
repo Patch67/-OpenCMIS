@@ -81,9 +81,7 @@ version01a/articles/__pycache__/
 version01a/articles/migrations/__pycache__/
 version01a/issues/__pycache__/
 version01a/issues/migrations/
-version01a/issues/migrations/__pycache__/
 version01a/opencmis/migrations/
-version01a/opencmis/migrations/__pycache__/
 version01a/static/static/
 version01a/timetable/__pycache__/
 version01a/timetable/migrations/__pycache__/
