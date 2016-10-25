@@ -59,26 +59,32 @@ class StudentTestRead(TestCase):
         print('End permission list')
 
 
-        # Create a reader
+        # Create a reader: View only
         self.reader = User.objects.create_user(username='reader', password='pass')
         permission = Permission.objects.get(content_type=content_type, codename='view_student')
         self.reader.user_permissions.add(permission)
         self.reader.save()
 
-        # Create an editor
+        # Create an editor: View + Change
         self.editor = User.objects.create_user(username='editor', password='pass')
+        permission = Permission.objects.get(content_type=content_type, codename='view_student')
+        self.editor.user_permissions.add(permission)
         permission = Permission.objects.get(content_type=content_type, codename='change_student')
         self.editor.user_permissions.add(permission)
         self.editor.save()
 
-        # Create a creator
+        # Create a creator: View + Add
         self.creator = User.objects.create_user(username='creator', password='pass')
+        permission = Permission.objects.get(content_type=content_type, codename='view_student')
+        self.editor.user_permissions.add(permission)
         permission = Permission.objects.get(content_type=content_type, codename='add_student')
         self.creator.user_permissions.add(permission)
         self.creator.save()
 
-        # Create deleter
+        # Create deleter: View + Delete
         self.deleter = User.objects.create_user(username='deleter', password='pass')
+        permission = Permission.objects.get(content_type=content_type, codename='view_student')
+        self.editor.user_permissions.add(permission)
         permission = Permission.objects.get(content_type=content_type, codename='delete_student')
         self.deleter.user_permissions.add(permission)
         self.deleter.save()
@@ -132,6 +138,7 @@ class StudentTestRead(TestCase):
         sq.save()
 
     def test_create(self):
+        # Test student homepage URL
         url = '/opencmis/student/'
 
         # Not logged in (guest)
@@ -145,10 +152,53 @@ class StudentTestRead(TestCase):
         response = self.client.get(url)
         self.assertRedirects(response, '/login/?redirect_to=/opencmis/student/')
 
+        # Test student detail URL
+        url = '/opencmis/student/1/'
+
         # Student Reader logged in
         self.client.login(username='reader', password='pass')
         response = self.client.get(url)
         self.assertContains(response, "Jacob Percival")
+        # Test to ensure add icon is not displayed
+        self.assertNotContains(response, '<a href="/opencmis/student/add/">')
+        # Test to ensure edit icon is not displayed
+        self.assertNotContains(response, '<a href="/opencmis/student/1/update/">')
+        # Test to ensure delete icon is not displayed
+        self.assertNotContains(response, '<a href="/opencmis/student/1/delete/">')
+
+        # Student Creator logged in
+        self.client.login(username='creator', password='pass')
+        response = self.client.get(url)
+        self.assertContains(response, "Jacob Percival")
+        # Test to ensure add icon is displayed
+        self.assertContains(response, '<a href="/opencmis/student/add/">')
+        # Test to ensure edit icon is not displayed
+        self.assertNotContains(response, '<a href="/opencmis/student/1/update/">')
+        # Test to see if delete icon is not displayed
+        self.assertNotContains(response, '<a href="/opencmis/student/1/delete/">')
+
+        # Student Editor logged in
+        self.client.login(username='editor', password='pass')
+        response = self.client.get(url)
+        self.assertContains(response, "Jacob Percival")
+        # Test to ensure add icon is not displayed
+        self.assertNotContains(response, '<a href="/opencmis/student/add/">')
+        # Test to ensure edit icon is displayed
+        self.assertContains(response, '<a href="/opencmis/student/1/update/">')
+        # Test to see if delete icon is not displayed
+        self.assertNotContains(response, '<a href="/opencmis/student/1/delete/">')
+
+        # Student Deleter logged in
+        self.client.login(username='deleter', password='pass')
+        response = self.client.get(url)
+        self.assertContains(response, "Jacob Percival")
+        # Test to ensure add icon is not displayed
+        self.assertNotContains(response, '<a href="/opencmis/student/add/">')
+        # Test to ensure edit icon is displayed
+        self.assertNotContains(response, '<a href="/opencmis/student/1/update/">')
+        # Test to see if delete icon is not displayed
+        self.assertContains(response, '<a href="/opencmis/student/1/delete/">')
+
 
         self.assertEqual(Student.objects.count(), 1)
         self.assertEqual(Title.objects.first().title, 'Mr')
