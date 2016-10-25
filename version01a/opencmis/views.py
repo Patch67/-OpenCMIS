@@ -320,6 +320,7 @@ def dashboard(request):
 
 def index_context(request):
     """index filtering"""
+
     # TODO Make this Ajax and you're cooking on gas baby
     # TODO: Make the search form remember the value of the previous search items, at least the Drop Box
 

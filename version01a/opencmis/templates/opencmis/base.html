@@ -68,11 +68,13 @@ $(document).ready(function(){
         <div class="collapse navbar-collapse" id="topNavBar">
             <!-- Left Items -->
             <ul class="nav navbar-nav">
+                {% if perms.opencmis.view_student %}
                 <li class="active">
                     <a href="{% url 'opencmis:index' %}">
                         <span class="glyphicon glyphicon-education" area-hidden="true"></span>&nbsp;&nbsp;Students
                     </a>
                 </li>
+                {% endif %}
                 <li class="">
                     <a href="/timetable/subject/">
                         <span class="glyphicon glyphicon-time" area-hidden="true"></span>&nbsp;&nbsp;Timetable
@@ -116,6 +118,7 @@ $(document).ready(function(){
                         <span class="glyphicon glyphicon-tag" area-hidden="true"></span> Issues
                     </a>
                 </li>
+                {% if user.is_authenticated %}
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
                        aria-haspopup="true"
@@ -127,10 +130,11 @@ $(document).ready(function(){
                                 password</a>
                         </li>
                         <li>
-                            <a href="#"><span class="glyphicon glyphicon-log-out" area-hidden="true"></span>&nbsp;&nbsp;Logout</a>
+                            <a href="/logout/"><span class="glyphicon glyphicon-log-out" area-hidden="true"></span>&nbsp;&nbsp;Logout</a>
                         </li>
                     </ul>
                 </li>
+                {% endif %}
             </ul>
         </div>
     </div>
@@ -141,7 +145,6 @@ $(document).ready(function(){
 </div>
 <div class="container-fluid">
     <div class="row">
-
         {% if not hidden %}
         <div class="col-sm-3">
             <a href="#"><span class="glyphicon glyphicon-unchecked" aria-hidden="true"></span>&nbsp;Hide</a>

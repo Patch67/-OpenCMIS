@@ -49,7 +49,7 @@ class StudentTestRead(TestCase):
         # Get content handle for permissions
         content_type = ContentType.objects.get_for_model(Student)
 
-        '''
+
         # List all available student permissions
         print('Permission List')
         print('codename, name')
@@ -57,7 +57,7 @@ class StudentTestRead(TestCase):
         for perm in perms:
             print('{0}, {1}'.format(perm.codename, perm.name))
         print('End permission list')
-        '''
+
 
         # Create a reader
         self.reader = User.objects.create_user(username='reader', password='pass')
