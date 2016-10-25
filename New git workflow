@@ -16,3 +16,11 @@ path %PATH%; C:\Users\Patrick\AppData\Local\GitHub\PortableGit_284a859b0e6deba86
 
 So now you can use Git commands from the command line.
 
+(* IMPORTANT *)
+---------------
+git branch --set-upstream-to=origin/development Master
+The above command changes the upstream branch to origin/development.
+Note the local branch is still called Master which is a bit confusing.
+
+So now when I use git pull and git push I am syncing with the Development branch on Github, not the Master.
+
