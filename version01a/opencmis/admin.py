@@ -1,8 +1,6 @@
 from django.contrib import admin
 from .models import Student, Teacher, Building, Room, Qualification, StudentQualification,\
     Behaviour, BaselineEntry, BaselineValue, Ethnicity, Status, Title
-
-
 from django.contrib import admin
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
