@@ -8,7 +8,7 @@ This is because I am using sqlite3 and I have transferred this with the rest of 
 So it doesn't need any migrations it already works.
 The migrations were what was left over form operations on another computer with different versions.
 
-Delete all the mirgrtions folders and all worked well.
+Delete all the migrations folders and all worked well.
 
 I don't know if this would work for Postgresql
 
