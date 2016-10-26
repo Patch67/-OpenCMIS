@@ -12,3 +12,12 @@ Delete all the mirgrtions folders and all worked well.
 
 I don't know if this would work for Postgresql
 
+
+Notes 2
+-------
+git status shows loads of *.pyc (Python cache files) as changed.
+There is no need to commit these changes.
+Use git add to add a new file if you want.
+Then git commit to register changes that you want in the repo (not *.pyc files).
+git push will only push the files you have committed.
+
