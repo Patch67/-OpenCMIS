@@ -68,7 +68,7 @@ git clone -b development --single-branch https://github.com/Patch67/OpenCMIS3.gi
 
 Will download the development branch (not the Master branch) and start a new git repo there.
 
-So now I can use the Workglow above properly.
+So now I can use the Workflow above properly.
 
 -----------------------
 Notes
