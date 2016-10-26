@@ -11,6 +11,8 @@ from django.http import HttpResponse
 from django.template import loader
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
+from django.contrib.auth.models import User, Permission, Group
+from django.contrib.contenttypes.models import ContentType
 
 
 class IndexView(LoginRequiredMixin, ListView):
@@ -359,3 +361,54 @@ def index_context(request):
     d = {'index': index}
     d['filter'] = Status.objects.all()
     return d
+
+
+@login_required()
+@permission_required('add_user')
+def import_users(request):
+    """
+    Creates users from a given CSV file.
+    Adds users to appropriate group from CSV file
+    :param request:
+    :return:
+    """
+    # Get content handle for permissions
+    #content_type = ContentType.objects.get_for_model(Student)
+
+    # List all available student permissions
+    print('Permission List')
+    print('codename, name')
+    #perms = Permission.objects.filter(content_type=content_type)
+    perms = Permission.objects.all()
+    for perm in perms:
+        print('{0}, {1}'.format(perm.codename, perm.name))
+    print('End permission list')
+
+    f = open('C:/Users/biggpaad/Desktop/OpenCMIS3/OpenCMIS3/users.csv', 'r')
+    reader = csv.reader(f)
+    for row in reader:
+        first_name = row[0]
+        last_name = row[1]
+        username = row[2]
+        email = row[3]
+        password = row[4]
+        group = row[5]
+
+        print('{0} {1} {2} {3} {4} {5}'.format(first_name, last_name, username, email, password, group))
+
+        user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, password=password)
+
+        # Are permissions really required if I am using group membership
+        #permission = Permission.objects.get(content_type=content_type, codename='view_student')
+        #user.user_permissions.add(permission)
+        #user.save()
+
+        group = Group.objects.get(name=group)
+        group.user_set.add(user)
+
+    template = 'opencmis/import-users.html'
+    context = ''
+
+    f.close()
+
+    return render(request, template, context)
