@@ -25,6 +25,7 @@ class IndexView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         """Customise the context ready to supply to the template"""
         context = super(IndexView, self).get_context_data(**kwargs)
+
         # The following two lines should appear in every context
         context['student'] = 'Nobody'
         context['tab'] = ''
