@@ -79,4 +79,7 @@ urlpatterns = [
 
     # /dashboard/
     url(r'dashboard/$', views.dashboard, name='dashboard'),
+
+    # /import_users/
+    url(r'import_users/$', views.import_users, name='import-users'),
 ]
