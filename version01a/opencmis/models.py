@@ -151,7 +151,7 @@ class Ethnicity(models.Model):
 
 
 class Status(models.Model):
-    status = models.CharField(max_length=30)
+    status = models.CharField(max_length=80)
 
     class Meta:
         verbose_name_plural = 'Status'
