@@ -125,6 +125,13 @@ class StudentQualificationAdd(CreateView):
         context['student'] = get_object_or_404(Student, pk=self.kwargs['student_id'])
         return context
 
+    def form_valid(self, form):
+        # TODO: Fix StudentID
+        # GoldDust: The following line gets the student_id from the URL and supplies it to the SQL record
+        # This is really important when writing forms which depend upon an id given in URL
+        form.instance.student_id = self.kwargs['student_id']
+        return super(StudentQualificationAdd, self).form_valid(form)
+
 
 class StudentQualificationUpdate(UpdateView):
     model = StudentQualification
