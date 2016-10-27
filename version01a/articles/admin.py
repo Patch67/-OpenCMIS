@@ -4,7 +4,7 @@ from import_export import resources
 from import_export.admin import ImportExportModelAdmin
 
 
-# Student import_export
+# Article import_export
 class ArticleAdmin(ImportExportModelAdmin):
     pass
 
