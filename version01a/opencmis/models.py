@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
 
 
 class Student(models.Model):
@@ -7,11 +9,14 @@ class Student(models.Model):
     title = models.ForeignKey('Title', blank=True)
     first_name = models.CharField(max_length=50, blank=False)
     last_name = models.CharField(max_length=30, blank=False)
-    gender_choices = (('M', 'Male'), ('F', 'Female'))
-    gender = models.CharField(max_length=1, choices=gender_choices, default='M')
+    GENDER_CHOICES = (('M', 'Male'), ('F', 'Female'))
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M')
     ethnicity = models.ForeignKey('Ethnicity', blank=True, null=True, on_delete=models.SET_NULL)
     date_of_birth = models.DateField(blank=False)
-    ULN = models.CharField(max_length=10, blank=True)
+    ULN = models.CharField(max_length=10, blank=True,
+                           validators=[RegexValidator(regex=r'^[1-9][0-9]{9}$',
+                                                      message='ULN must be 1000000000 to 9999999999',
+                                                      code='invalid_uln')])
     house = models.CharField(max_length=50, blank=True)
     road = models.CharField(max_length=50, blank=True)
     area = models.CharField(max_length=50, blank=True)
