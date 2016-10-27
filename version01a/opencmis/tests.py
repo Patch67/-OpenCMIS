@@ -4,7 +4,7 @@ from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
 
 from .models import Student, Title, Ethnicity, Status, BaselineEntry, BaselineValue, Qualification, StudentQualification
-from .views import make_alert
+from .views import make_alert, percentage
 
 
 class StudentTestAdd(TestCase):
@@ -144,7 +144,8 @@ class StudentTestRead(TestCase):
         response = self.client.get(url)
         self.assertRedirects(response, '/login/?redirect_to=/opencmis/student/')
         response = self.client.get('/opencmis/dashboard/', follow=True)
-        self.assertEqual(response.status_code, 404, "Should not allow access as user not logged in")
+        self.assertEqual(response.status_code, 200, "Should not allow access as user not logged in")
+        self.assertRedirects(response, '/login/?next=/opencmis/dashboard/')
 
         # logged in with no permissions
         self.c.login(username='user', password='pass')
@@ -241,3 +242,13 @@ class MakeAlertTest(TestCase):
         self.assertEqual(make_alert(25, 50, 75, 50), 'info')
         self.assertEqual(make_alert(25, 50, 75, 75), 'success')
 
+
+class PercentageTest(TestCase):
+    def setUp(self):
+        self.c = Client()
+
+    def test_Create(self):
+        self.assertEqual(percentage(20, 80), 25)
+        self.assertEqual(percentage(20, 0), 0)
+        self.assertEqual(percentage(0, 0), 0)
+        self.assertEqual(percentage(80, 20), 400)
