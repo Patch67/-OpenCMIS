@@ -141,13 +141,13 @@ class Staff(models.Model):
 
 
 class Ethnicity(models.Model):
-    value = models.CharField(max_length=30)
+    value = models.CharField(max_length=80)
 
     def __str__(self):
         return self.value
 
     class Meta:
-        verbose_name_plural = 'Ethnicity'
+        verbose_name_plural = 'Ethnicities'
 
 
 class Status(models.Model):
