@@ -55,8 +55,7 @@ urlpatterns = [
     # UPDATE
     # /student/123/qualifications/123/update
     url(r'student/(?P<student_id>[0-9]+)/qualification/(?P<qualification_id>[0-9]+)/update$',
-        views.StudentQualificationUpdate.as_view(
-            success_url=reverse_lazy('opencmis:student-qualification')),
+        views.StudentQualificationUpdate.as_view(),
         name='student-qualification-update'),
 
     # /student/123/behaviours
