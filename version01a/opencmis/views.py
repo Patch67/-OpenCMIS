@@ -274,7 +274,11 @@ def make_alert(low, medium, high, value):
 
 
 def percentage(value, total):
-    return int(100 * value / total)
+    # Avoid division by zero errors.
+    if total > 0:
+        return int(100 * value / total)
+    else:
+        return 0
 
 
 def make_kpi(title, total, number, text):
@@ -289,7 +293,7 @@ def make_kpi(title, total, number, text):
     return kpi
 
 
-@login_required()
+@login_required(login_url='/login/')
 def dashboard(request):
     template = 'opencmis/dashboard.html'
 
@@ -363,7 +367,7 @@ def index_context(request):
     return d
 
 
-@login_required()
+@login_required(login_url='/login/')
 @permission_required('add_user')
 def import_users(request):
     """
