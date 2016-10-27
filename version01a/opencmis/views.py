@@ -135,18 +135,46 @@ class StudentQualificationAdd(CreateView):
 
 class StudentQualificationUpdate(UpdateView):
     model = StudentQualification
-    fields = ['student', 'qualification', 'start', 'expected_end']
+    fields = ['qualification', 'start', 'expected_end']
 
     def get_object(self):
+        """
+        get object would get called anyway but this is a sanity check to see if it actually exists
+        :return: The object as expected or a 404 page if somebody is playing silly buggers
+        """
         return get_object_or_404(StudentQualification, pk=self.kwargs['qualification_id'])
 
     def get_context_data(self, **kwargs):
+        """
+        Build up dictionary data to be passed to the template
+        :param kwargs:
+        :return:
+        """
         context = super(StudentQualificationUpdate, self).get_context_data(**kwargs)
         context['student_list'] = Student.objects.all()
         # The following two lines should appear in every context
-        context['student'] = get_object_or_404(Student, pk=self.kwargs['student_id'])
-        context['tab'] = 'qualification'
+        context['student'] = get_object_or_404(Student, pk=self.kwargs['student_id'])  # Shout if student doesn't exist
+        context['tab'] = 'qualification'  # Keeps us on the Qualification tab
         return context
+
+    def form_valid(self, form):
+        """
+        This iscalled when a form is submitted with valid data for the form.
+        This is really important when writing forms which depend upon an id given in URL
+        :param form: The submitted form. (Excludes student_id]
+        :return: The submitted form with student_id inserted as if it was submitted with the form
+        """
+        form.instance.student_id = self.kwargs['student_id']
+        return super(StudentQualificationUpdate, self).form_valid(form)
+
+    def get_success_url(self):
+        """
+        This is required to generate the URL live, hence the reverse_lazy, as the student_id cannot be known in advance
+        so it isn't easy to put it in the URLs.
+        :return: A valid URL /opencmis/student/21/qualification/
+        """
+        url = '/opencmis/student/{0}/qualification/'.format(self.kwargs['student_id'])
+        return url
 
 
 def student_qualification_index(request, student_id):
@@ -281,6 +309,13 @@ def make_alert(low, medium, high, value):
 
 
 def percentage(value, total):
+    """
+    Calculates a percentage or value / total.
+    Will avoid divide by zero error if total is zero
+    :param value:
+    :param total:
+    :return: integer percentage
+    """
     # Avoid division by zero errors.
     if total > 0:
         return int(100 * value / total)
