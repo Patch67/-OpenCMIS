@@ -83,7 +83,7 @@ class StudentQualification(models.Model):
         return '%s: %s' % (self.student, self.qualification)
 
     def get_absolute_url(self):
-        return u'/opencmis/student/%d/qualification/' % self.student_id
+        return u'/opencmis/student/{0}/qualification/'.format(self.student_id)
 
 
 class BaselineEntry(models.Model):
@@ -112,7 +112,7 @@ class BaselineValue(models.Model):
         return "{0} {1} {2}".format(self.student, self.baseline, self.week)
 
     def get_absolute_url(self):
-        return u'/opencmis/student/%d/baseline/' % self.student_id
+        return u'/opencmis/student/{0}/baseline/'.format(self.student_id)
 
 
 class Building(models.Model):
