@@ -1,4 +1,16 @@
 # -OpenCMIS
-Version01a
-This version concentrates on getting a single app working with multiple model classes.
+A Management Information System for colleges.
+Implemented features:-
+- Student
+- Qualifications
 
+
+In progress features:-
+- Baseline assessments
+- ILR
+
+Planned features:-
+- Timetable
+- Work Experience
+- Destination tracker
+- Target tracking
