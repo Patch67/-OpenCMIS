@@ -76,14 +76,19 @@ fabric.properties
 # .idea/misc.xml 
 # *.ipr
 # My Stuff for OpenCMIS and Python
+
+# Don't include any python cache files
 *.pyc
 version01a/articles/__pycache__/
-version01a/articles/migrations/__pycache__/
 version01a/issues/__pycache__/
+version01a/timetable/__pycache__/
+version01a/version01a/__pycache__/
+
+# Don't include any Django migrations
+version01a/articles/migrations/
 version01a/issues/migrations/
 version01a/opencmis/migrations/
+version01a/timetable/migrations/
+
 version01a/static/static/
-version01a/timetable/__pycache__/
-version01a/timetable/migrations/__pycache__/
-version01a/version01a/__pycache__/
 
