@@ -1,0 +1,15 @@
+This projects has several dependencies.
+Python
+------
+Python 3.x
+Virtualenv (if running from linux, not for Windows)
+Django 1.10.2
+django-import-export
+psycop2
+
+OS
+--
+Postgres 9.6
+- Use pgAdmin 4 if using Windows
+- NB. Remember to set the proprties to the bin directory to enable backup and restore.
+

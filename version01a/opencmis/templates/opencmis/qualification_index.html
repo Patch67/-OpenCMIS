@@ -7,17 +7,22 @@
             <div class="col-md-6">{{qual.qualification}}</div>
             <div class="col-md-2">{{qual.start}}</div>
             <div class="col-md-2">{{qual.expected_end}}</div>
+            {% if perms.opencmis.change_qualification %}
+            <a href="{% url 'opencmis:student-qualification-update' student.id qual.id %}"><span
+                    class="glyphicon glyphicon-pencil" area-hidden="true"></span>&nbsp;Edit</a>
+            {% endif %}
         </div>
     {% empty %}
         <div class="alert alert-warning" role="alert">
             <strong>There are no qualifications to display.</strong>
         </div>
     {% endfor %}
+    {% if perms.opencmis.add_qualification %}
     <div class="row">
             <a href="{% url 'opencmis:student-qualification-create' student.id %}">
                 <span class="glyphicon glyphicon-plus-sign" area-hidden="true"></span>
                 &nbsp;&nbsp;Add Qualification
             </a>
     </div>
-
+    {% endif %}
 {% endblock %}
