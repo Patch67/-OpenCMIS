@@ -92,3 +92,5 @@ version01a/timetable/migrations/
 
 version01a/static/static/
 
+# Exclude settings
+version01a/version01a/settings.py
