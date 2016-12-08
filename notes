@@ -1,0 +1,23 @@
+Notes
+-----
+After I downloaded the development site from github it would not run giving lots of errors.
+It would not run make migrations either.
+
+It turns out that all the migrations folders need deleting.
+This is because I am using sqlite3 and I have transferred this with the rest of the source code.
+So it doesn't need any migrations it already works.
+The migrations were what was left over form operations on another computer with different versions.
+
+Delete all the migrations folders and all worked well.
+
+I don't know if this would work for Postgresql
+
+
+Notes 2
+-------
+git status shows loads of *.pyc (Python cache files) as changed.
+There is no need to commit these changes.
+Use git add to add a new file if you want.
+Then git commit to register changes that you want in the repo (not *.pyc files).
+git push will only push the files you have committed.
+

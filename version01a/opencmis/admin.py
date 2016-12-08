@@ -1,8 +1,6 @@
 from django.contrib import admin
 from .models import Student, Teacher, Building, Room, Qualification, StudentQualification,\
     Behaviour, BaselineEntry, BaselineValue, Ethnicity, Status, Title
-
-
 from django.contrib import admin
 from import_export import resources
 from import_export.admin import ImportExportModelAdmin
@@ -17,9 +15,10 @@ class StudentResource(resources.ModelResource):
 
     class Meta:
         model = Student
-        fields = ('id', 'first_name', 'last_name',)           # These are the fields I want to import
-        export_order = ('id', 'first_name', 'last_name',)     # This is the order for export
-        # Let me know what's happening
+        fields = ('id', 'status', 'title', 'first_name', 'last_name', 'gender', 'ehtnicity', 'date_of_birth',
+                  'ULN', 'house', 'road', 'area', 'town', 'post_code', 'photo')
+        export_order = ('id', 'status', 'title', 'first_name', 'last_name', 'gender', 'ehtnicity', 'date_of_birth',
+                        'ULN', 'house', 'road', 'area', 'town', 'post_code', 'photo')
         skip_unchanged = True
         report_skipped = True
 

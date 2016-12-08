@@ -2,7 +2,7 @@
 {% block submenu %}
 <!-- Submenu fails if student doesn't contain a valid id -->
 <!-- Set student to Nobody on index page when a student hasn't yet been selected -->
-<!-- Check if there is a selected student before strying to access student ids -->
+<!-- Check if there is a selected student before trying to access student ids -->
 {% if student != 'Nobody' %}
 <ul class="nav nav-tabs">
     <li class="{% block home-active %}{% endblock %}"><a href="{% url 'opencmis:student-detail' student.id %}">Home</a></li>
@@ -27,7 +27,7 @@
 {% endblock %}
 {% block index %}
     <!--TODO: Best Practice Expand this across all applications-->
-    {% if perms.add_person %}
+    {% if perms.add_student %}
     <a href="{% url 'opencmis:student-create' %}">
         <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
     </a>

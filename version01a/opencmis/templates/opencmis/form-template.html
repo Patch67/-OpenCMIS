@@ -3,6 +3,7 @@
     {% comment %}
     Try to use as much Bootstrap formatting as is possible
     But {{field}} autogens controls making it difficult to add classes
+    Solved by using add_css templatetag
     {% endcomment %}
     <div class="form-group">
         <span class="text-danger small">{{ field.errors }}</span>

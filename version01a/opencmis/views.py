@@ -11,6 +11,8 @@ from django.http import HttpResponse
 from django.template import loader
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
+from django.contrib.auth.models import User, Permission, Group
+from django.contrib.contenttypes.models import ContentType
 
 
 class IndexView(LoginRequiredMixin, ListView):
@@ -25,6 +27,7 @@ class IndexView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         """Customise the context ready to supply to the template"""
         context = super(IndexView, self).get_context_data(**kwargs)
+
         # The following two lines should appear in every context
         context['student'] = 'Nobody'
         context['tab'] = ''
@@ -35,13 +38,13 @@ class IndexView(LoginRequiredMixin, ListView):
         return Student.objects.all()
 
 
-class DetailView(DetailView):
+class StudentView(DetailView):
     model = Student
     permission_required = 'opencmis.view_student'
     template_name = 'opencmis/detail.html'
 
     def get_context_data(self, **kwargs):
-        context = super(DetailView, self).get_context_data(**kwargs)
+        context = super(StudentView, self).get_context_data(**kwargs)
         context['index'] = index_context(self.request)
         return context
 
@@ -69,6 +72,7 @@ class StudentUpdate(UpdateView):
     fields = ['status', 'title', 'first_name', 'last_name', 'date_of_birth',
               'ethnicity', 'gender', 'ULN',
               'house', 'road', 'area', 'town', 'post_code']
+
     def get_object(self):
         return get_object_or_404(Student, pk=self.kwargs['pk'])
 
@@ -121,21 +125,56 @@ class StudentQualificationAdd(CreateView):
         context['student'] = get_object_or_404(Student, pk=self.kwargs['student_id'])
         return context
 
+    def form_valid(self, form):
+        # TODO: Fix StudentID
+        # GoldDust: The following line gets the student_id from the URL and supplies it to the SQL record
+        # This is really important when writing forms which depend upon an id given in URL
+        form.instance.student_id = self.kwargs['student_id']
+        return super(StudentQualificationAdd, self).form_valid(form)
+
 
 class StudentQualificationUpdate(UpdateView):
     model = StudentQualification
-    fields = ['student', 'qualification', 'start', 'expected_end']
+    fields = ['qualification', 'start', 'expected_end']
 
     def get_object(self):
+        """
+        get object would get called anyway but this is a sanity check to see if it actually exists
+        :return: The object as expected or a 404 page if somebody is playing silly buggers
+        """
         return get_object_or_404(StudentQualification, pk=self.kwargs['qualification_id'])
 
     def get_context_data(self, **kwargs):
+        """
+        Build up dictionary data to be passed to the template
+        :param kwargs:
+        :return:
+        """
         context = super(StudentQualificationUpdate, self).get_context_data(**kwargs)
         context['student_list'] = Student.objects.all()
         # The following two lines should appear in every context
-        context['student'] = get_object_or_404(Student, pk=self.kwargs['student_id'])
-        context['tab'] = 'qualification'
+        context['student'] = get_object_or_404(Student, pk=self.kwargs['student_id'])  # Shout if student doesn't exist
+        context['tab'] = 'qualification'  # Keeps us on the Qualification tab
         return context
+
+    def form_valid(self, form):
+        """
+        This iscalled when a form is submitted with valid data for the form.
+        This is really important when writing forms which depend upon an id given in URL
+        :param form: The submitted form. (Excludes student_id]
+        :return: The submitted form with student_id inserted as if it was submitted with the form
+        """
+        form.instance.student_id = self.kwargs['student_id']
+        return super(StudentQualificationUpdate, self).form_valid(form)
+
+    def get_success_url(self):
+        """
+        This is required to generate the URL live, hence the reverse_lazy, as the student_id cannot be known in advance
+        so it isn't easy to put it in the URLs.
+        :return: A valid URL /opencmis/student/21/qualification/
+        """
+        url = '/opencmis/student/{0}/qualification/'.format(self.kwargs['student_id'])
+        return url
 
 
 def student_qualification_index(request, student_id):
@@ -270,7 +309,18 @@ def make_alert(low, medium, high, value):
 
 
 def percentage(value, total):
-    return int(100 * value / total)
+    """
+    Calculates a percentage or value / total.
+    Will avoid divide by zero error if total is zero
+    :param value:
+    :param total:
+    :return: integer percentage
+    """
+    # Avoid division by zero errors.
+    if total > 0:
+        return int(100 * value / total)
+    else:
+        return 0
 
 
 def make_kpi(title, total, number, text):
@@ -285,7 +335,7 @@ def make_kpi(title, total, number, text):
     return kpi
 
 
-@login_required()
+@login_required(login_url='/login/')
 def dashboard(request):
     template = 'opencmis/dashboard.html'
 
@@ -357,3 +407,54 @@ def index_context(request):
     d = {'index': index}
     d['filter'] = Status.objects.all()
     return d
+
+
+@login_required(login_url='/login/')
+@permission_required('add_user')
+def import_users(request):
+    """
+    Creates users from a given CSV file.
+    Adds users to appropriate group from CSV file
+    :param request:
+    :return:
+    """
+    # Get content handle for permissions
+    #content_type = ContentType.objects.get_for_model(Student)
+
+    # List all available student permissions
+    print('Permission List')
+    print('codename, name')
+    #perms = Permission.objects.filter(content_type=content_type)
+    perms = Permission.objects.all()
+    for perm in perms:
+        print('{0}, {1}'.format(perm.codename, perm.name))
+    print('End permission list')
+
+    f = open('C:/Users/biggpaad/Desktop/OpenCMIS3/OpenCMIS3/users.csv', 'r')
+    reader = csv.reader(f)
+    for row in reader:
+        first_name = row[0]
+        last_name = row[1]
+        username = row[2]
+        email = row[3]
+        password = row[4]
+        group = row[5]
+
+        print('{0} {1} {2} {3} {4} {5}'.format(first_name, last_name, username, email, password, group))
+
+        user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, password=password)
+
+        # Are permissions really required if I am using group membership
+        #permission = Permission.objects.get(content_type=content_type, codename='view_student')
+        #user.user_permissions.add(permission)
+        #user.save()
+
+        group = Group.objects.get(name=group)
+        group.user_set.add(user)
+
+    template = 'opencmis/import-users.html'
+    context = ''
+
+    f.close()
+
+    return render(request, template, context)

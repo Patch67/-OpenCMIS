@@ -17,7 +17,7 @@ urlpatterns = [
 
     # /opencmis/student/232/
     url(r'student/(?P<pk>[0-9]+)/$',
-        views.DetailView.as_view(),
+        views.StudentView.as_view(),
         name='student-detail'),
 
     # /opencmis/student/gmail
@@ -55,8 +55,7 @@ urlpatterns = [
     # UPDATE
     # /student/123/qualifications/123/update
     url(r'student/(?P<student_id>[0-9]+)/qualification/(?P<qualification_id>[0-9]+)/update$',
-        views.StudentQualificationUpdate.as_view(
-            success_url=reverse_lazy('opencmis:student-qualification')),
+        views.StudentQualificationUpdate.as_view(),
         name='student-qualification-update'),
 
     # /student/123/behaviours
@@ -79,4 +78,7 @@ urlpatterns = [
 
     # /dashboard/
     url(r'dashboard/$', views.dashboard, name='dashboard'),
+
+    # /import_users/
+    url(r'import_users/$', views.import_users, name='import-users'),
 ]

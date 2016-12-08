@@ -16,3 +16,64 @@ path %PATH%; C:\Users\Patrick\AppData\Local\GitHub\PortableGit_284a859b0e6deba86
 
 So now you can use Git commands from the command line.
 
+(* IMPORTANT *)
+---------------
+git branch --set-upstream-to=origin/development Master
+
+I've done this to the USB version but it is possible that I'll need to do it to the other
+local repos that I use, i.e.
+- home/github/opencmis
+- work/opencmis
+- usb/opencmis
+
+Notes about clone
+-----------------
+git clone https://github.com/patch67/opencmis3
+
+Will make a complete clone of the default branch which is Master.
+Master is not the most up to date branch.
+It is the latest stable branch.
+
+So here is the divide.
+branch version01a is an old branch no longer used.
+branch Master is the demo branch showing the latest tested approved stuff.
+branch development is the working branch.
+
+I should only do development on the development branch leaving the Master branch stable.
+Once a week I should issue a pull request to put the latest development changes into Master.
+
+
+
+
+The above command changes the upstream branch to origin/development.
+Note the local branch is still called Master which is a bit confusing.
+
+So now when I use git pull and git push I am syncing with the Development branch on Github, not the Master.
+
+---------------------------
+So here is the workflow ...
+---------------------------
+git pull # Will pull down any changes from the hub
+git status # Will show any differences between your local copy and the hub.
+git add # Will add new files to the repo.
+git commit # Will commit your changes, i.e. Yes I want this.
+git push # Will push your committed stuff to the hub.
+
+
+
+-----------------------
+IMPORTANT
+-----------------------
+git clone -b development --single-branch https://github.com/Patch67/OpenCMIS3.git
+
+Will download the development branch (not the Master branch) and start a new git repo there.
+
+So now I can use the Workflow above properly.
+
+-----------------------
+Notes
+-----------------------
+If you make path the PortableGit directory (not PortableGit/cmd) then you can use the git-bash command from DOS.
+This gives you access to the Linux bash commands so you can use VIM, s, ll, etc.
+
+

@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.core.validators import RegexValidator
 
 
 class Student(models.Model):
@@ -7,11 +9,14 @@ class Student(models.Model):
     title = models.ForeignKey('Title', blank=True)
     first_name = models.CharField(max_length=50, blank=False)
     last_name = models.CharField(max_length=30, blank=False)
-    gender_choices = (('M', 'Male'), ('F', 'Female'))
-    gender = models.CharField(max_length=1, choices=gender_choices, default='M')
+    GENDER_CHOICES = (('M', 'Male'), ('F', 'Female'))
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default='M')
     ethnicity = models.ForeignKey('Ethnicity', blank=True, null=True, on_delete=models.SET_NULL)
     date_of_birth = models.DateField(blank=False)
-    ULN = models.CharField(max_length=10, blank=True)
+    ULN = models.CharField(max_length=10, blank=True,
+                           validators=[RegexValidator(regex=r'^[1-9][0-9]{9}$',
+                                                      message='ULN must be 1000000000 to 9999999999',
+                                                      code='invalid_uln')])
     house = models.CharField(max_length=50, blank=True)
     road = models.CharField(max_length=50, blank=True)
     area = models.CharField(max_length=50, blank=True)
@@ -83,7 +88,7 @@ class StudentQualification(models.Model):
         return '%s: %s' % (self.student, self.qualification)
 
     def get_absolute_url(self):
-        return u'/opencmis/student/%d/qualification/' % self.student_id
+        return u'/opencmis/student/{0}/qualification/'.format(self.student_id)
 
 
 class BaselineEntry(models.Model):
@@ -112,7 +117,7 @@ class BaselineValue(models.Model):
         return "{0} {1} {2}".format(self.student, self.baseline, self.week)
 
     def get_absolute_url(self):
-        return u'/opencmis/student/%d/baseline/' % self.student_id
+        return u'/opencmis/student/{0}/baseline/'.format(self.student_id)
 
 
 class Building(models.Model):
@@ -141,17 +146,17 @@ class Staff(models.Model):
 
 
 class Ethnicity(models.Model):
-    value = models.CharField(max_length=30)
+    value = models.CharField(max_length=80)
 
     def __str__(self):
         return self.value
 
     class Meta:
-        verbose_name_plural = 'Ethnicity'
+        verbose_name_plural = 'Ethnicities'
 
 
 class Status(models.Model):
-    status = models.CharField(max_length=30)
+    status = models.CharField(max_length=80)
 
     class Meta:
         verbose_name_plural = 'Status'
