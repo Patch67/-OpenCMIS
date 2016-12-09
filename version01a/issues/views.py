@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.http import HttpResponseRedirect
 from .models import Issue, Update as My_Update
 
 
@@ -20,7 +21,16 @@ class Home(LoginRequiredMixin, ListView):
         return context
 
 
-class Detail(LoginRequiredMixin, DetailView):
+# class Detail(LoginRequiredMixin, DetailView):
+class Detail(LoginRequiredMixin, UpdateView):
+    # PAB 02/12/2016
+    # I originally used just a DetailView which works fine for output only forms
+    # but this form is a bit different because I also want to do some input, i.e. I want to POST update data to it.
+    # I changed from a DetailView to an UpdateView and tried to work with the Post functions but it still doesn't work.
+    # I wonder whether I should just bite the bullet and make my own FormView.
+    # This appears to allow me to do anything with forms whereas the predefined Views are specifically limited to
+    # certain situations.
+
     # TODO: Can't make this type of View into a one/many form/subform
     # http://stackoverflow.com/questions/8903601/how-to-process-a-form-via-get-or-post-using-class-based-views
 
@@ -30,12 +40,28 @@ class Detail(LoginRequiredMixin, DetailView):
     login_url = reverse_lazy('login')
     model = Issue
     template_name = 'issue/detail.html'
+    fields = '__all__'  # Needed to add this in if changing from DetailView to UpdateView
 
     def get_context_data(self, **kwargs):
         context = super(Detail, self).get_context_data(**kwargs)
         context['updates'] = My_Update.objects.filter(issue=self.kwargs['pk'])
         context['index'] = index_context(self.request)
         return context
+
+    def form_valid(self, form):
+        # TODO: Here is the problem. I am trying to use form_valid to process the results of a POST operation
+        # TODO: But the DetailView does not support POST operations, so the solution must be to use another view, Edit??
+        print("Hello world")
+        print(form)
+        return super(Detail, self).form_valid(form)
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            # <process form cleaned data>
+            return HttpResponseRedirect('/success/')
+
+        return render(request, self.template_name, {'form': form})
 
 
 class Create(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
