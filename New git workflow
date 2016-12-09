@@ -77,3 +77,11 @@ If you make path the PortableGit directory (not PortableGit/cmd) then you can us
 This gives you access to the Linux bash commands so you can use VIM, s, ll, etc.
 
 
+9th December 2016
+-----------------
+git checkout development
+This command changes the current git branch
+Then git pull will pull the remote origin/development into the local development
+
+New Workflow is to always work with the development branch then when you are completely happy with it
+make a pull request to the origin/master
