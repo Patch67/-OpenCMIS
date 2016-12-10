@@ -23,19 +23,19 @@
             {% csrf_token %}
             <div class="form-check">
                 <label>Status:</label>
-                <label class="radio-inline"><input type="radio" name="status">Close</label>
-                <label class="radio-inline"><input type="radio" name="status" checked>Open</label>
-                <label class="radio-inline"><input type="radio" name="status">On hold</label>
+                <label class="radio-inline"><input type="radio" name="Status" value="Close">Close</label>
+                <label class="radio-inline"><input type="radio" name="Status" value="Open" checked>Open</label>
+                <label class="radio-inline"><input type="radio" name="Status" value="On hold">On hold</label>
             </div>
             <div class="form-check">
                 <label>Public:</label>
-                <label class="radio-inline"><input type="radio" name="Public" checked>Public</label>
-                <label class="radio-inline"><input type="radio" name="Public">Private</label>
+                <label class="radio-inline"><input type="radio" name="Public"  value="Public"checked>Public</label>
+                <label class="radio-inline"><input type="radio" name="Public" value="Private">Private</label>
             </div>
             <div class="form-check">
                 <!--TODO: This bit doesn't actually work-->
                 <label for="update">Update:</label>
-                <textarea class="form-control" rows="5" id="update">Type Something here</textarea>
+                <textarea class="form-control" rows="5" id="update" name="Update">Type Something here</textarea>
             </div>
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
@@ -45,6 +45,8 @@
 Notice the user of perm here, especially perm.appname.permision
 Can use this to check whether editable links should be displayed or not
 {% endcomment %}
+<!-- TODO: Just avoid errors at the moment fix later-->
+{%comment%}
 <div class="hidden-print">
 {% if perms.issue.change_issue %}
     <a href="{% url 'issue:update' object.id %}">Edit</a><br>
@@ -53,4 +55,5 @@ Can use this to check whether editable links should be displayed or not
     <a href="{% url 'issue:delete' object.id %}">Delete</a><br>
 {%endif %}
 </div>
+{%endcomment%}
 {% endblock %}}
