@@ -14,6 +14,6 @@ urlpatterns = [
     url(r'^(?P<pk>[0-9]+)$', views.Detail.as_view(), name='detail'),
     # /issue/123/update
     url(r'^(?P<pk>[0-9]+)/update$', views.Update.as_view(), name='update'),
-    # /issue/123/update
+    # /issue/123/delete
     url(r'^(?P<pk>[0-9]+)/delete$', views.Delete.as_view(), name='delete'),
 ]
