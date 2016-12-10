@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.core.urlresolvers import reverse_lazy
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
@@ -23,6 +23,8 @@ class Home(LoginRequiredMixin, ListView):
 
 # class Detail(LoginRequiredMixin, DetailView):
 class Detail(LoginRequiredMixin, UpdateView):
+    # PAB 02/12/2016 Renamed this to old so I can start a new class called Detail
+    # based on the FormView
     # PAB 02/12/2016
     # I originally used just a DetailView which works fine for output only forms
     # but this form is a bit different because I also want to do some input, i.e. I want to POST update data to it.
@@ -56,12 +58,15 @@ class Detail(LoginRequiredMixin, UpdateView):
         return super(Detail, self).form_valid(form)
 
     def post(self, request, *args, **kwargs):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            # <process form cleaned data>
-            return HttpResponseRedirect('/success/')
+        print("Status is {0}".format(request.POST['Status']))
+        print("Public is {0}".format(request.POST['Public']))
+        print("Update us {0}".format(request.POST['Update']))
+        #form = self.form_class(request.POST)
+        #if form.is_valid():
+        #    # <process form cleaned data>
+        #   return HttpResponseRedirect('/success/')
 
-        return render(request, self.template_name, {'form': form})
+        return render(request, self.template_name, self.get_context_data(**kwargs))
 
 
 class Create(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
