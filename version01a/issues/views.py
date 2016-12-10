@@ -48,6 +48,8 @@ class Detail(LoginRequiredMixin, UpdateView):
         context = super(Detail, self).get_context_data(**kwargs)
         context['updates'] = My_Update.objects.filter(issue=self.kwargs['pk'])
         context['index'] = index_context(self.request)
+        print(**kwargs)
+        print(context['object'])
         return context
 
     def form_valid(self, form):
@@ -58,15 +60,14 @@ class Detail(LoginRequiredMixin, UpdateView):
         return super(Detail, self).form_valid(form)
 
     def post(self, request, *args, **kwargs):
+        print("Issue id is {0}".format(kwargs['pk']))
         print("Status is {0}".format(request.POST['Status']))
         print("Public is {0}".format(request.POST['Public']))
         print("Update us {0}".format(request.POST['Update']))
-        #form = self.form_class(request.POST)
-        #if form.is_valid():
-        #    # <process form cleaned data>
-        #   return HttpResponseRedirect('/success/')
+        # TODO: This is enough data to be able to create an update record
+        # TODO: This doesn't do any data validation
 
-        return render(request, self.template_name, self.get_context_data(**kwargs))
+        return render(request, self.template_name)
 
 
 class Create(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
