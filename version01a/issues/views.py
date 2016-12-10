@@ -79,8 +79,8 @@ class Detail(LoginRequiredMixin, UpdateView):
                       personnel=User.objects.get(username=request.user.username),
                       update=request.POST['Update'])  # TODO: This doesn't do any validation
         q.save()
-    
-        return render(request, self.template_name)
+
+        return HttpResponseRedirect('/issue/{0}'.format(kwargs['pk']))
 
 
 class Create(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
