@@ -5,7 +5,9 @@ from django.core.urlresolvers import reverse_lazy
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.utils import timezone
 from django.http import HttpResponseRedirect
+from django.contrib.auth.models import User
 from .models import Issue, Update as My_Update
 
 
@@ -53,20 +55,31 @@ class Detail(LoginRequiredMixin, UpdateView):
         return context
 
     def form_valid(self, form):
-        # TODO: Here is the problem. I am trying to use form_valid to process the results of a POST operation
-        # TODO: But the DetailView does not support POST operations, so the solution must be to use another view, Edit??
+        # TODO: This never seems to get called
         print("Hello world")
         print(form)
         return super(Detail, self).form_valid(form)
 
     def post(self, request, *args, **kwargs):
+        '''
+        # Demo code to display thye actual form values
         print("Issue id is {0}".format(kwargs['pk']))
         print("Status is {0}".format(request.POST['Status']))
         print("Public is {0}".format(request.POST['Public']))
         print("Update us {0}".format(request.POST['Update']))
-        # TODO: This is enough data to be able to create an update record
-        # TODO: This doesn't do any data validation
-
+        '''
+        # Create record and save it manually
+        if request.POST['Public'] == 'Public':
+            public_boolean = True
+        else:
+            public_boolean = False
+        q = My_Update(issue=Issue.objects.get(pk=kwargs['pk']),
+                      public=public_boolean,
+                      date=timezone.now(),
+                      personnel=User.objects.get(username=request.user.username),
+                      update=request.POST['Update'])  # TODO: This doesn't do any validation
+        q.save()
+    
         return render(request, self.template_name)
 
 
