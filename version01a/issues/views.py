@@ -50,8 +50,6 @@ class Detail(LoginRequiredMixin, UpdateView):
         context = super(Detail, self).get_context_data(**kwargs)
         context['updates'] = My_Update.objects.filter(issue=self.kwargs['pk'])
         context['index'] = index_context(self.request)
-        print(**kwargs)
-        print(context['object'])
         return context
 
     def form_valid(self, form):
