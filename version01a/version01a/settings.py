@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'timetable.apps.TimetableConfig',
     'articles.apps.ArticlesConfig',
     'issues.apps.IssuesConfig',
+    'monitor.apps.MonitorConfig',
     'import_export',
     'django.contrib.admin',
     'django.contrib.auth',
