@@ -11,10 +11,23 @@
 <p>It will also acts as a test bed for low level activities in Django/Python</p>
 <h1>{{title}}</h1>
 <h2>{{method}}</h2>
+<p>{% if data %}{{data}}{% endif %}</p>
 <a href="">GET</a>
-<form action="" method="POST">
+<form action="" method="GET">
+    <!-- For a GET we do not need csrf_token -->
+    <!-- Get should never alter data -->
+    <button>GET</button>
+</form>
+
+<form action="" method="POST" name="something_else">
     {% csrf_token %}
-    <button>Submit</button>
+    <button>POST</button>
+</form>
+
+<form action="" method="POST" name="data">
+    {% csrf_token %}
+    <button>POST</button>
+    <input name="data" hidden="True" value="My data">
 </form>
 </body>
 </html>
