@@ -59,8 +59,16 @@ class Detail(LoginRequiredMixin, UpdateView):
         return super(Detail, self).form_valid(form)
 
     def post(self, request, *args, **kwargs):
+        """
+        This is only called when a user Clicks the Update button and the update form is submitted.
+        If the page is called via a GET command this is not called.
+        :param request: Use request.POST to get the form data from the Update section
+        :param args:
+        :param kwargs: Use kwargs['pk'] to get the issue id from the URL
+        :return:
+        """
         '''
-        # Demo code to display thye actual form values
+        # Demo code to display the actual form values
         print("Issue id is {0}".format(kwargs['pk']))
         print("Status is {0}".format(request.POST['Status']))
         print("Public is {0}".format(request.POST['Public']))
