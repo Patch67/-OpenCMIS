@@ -77,11 +77,42 @@ If you make path the PortableGit directory (not PortableGit/cmd) then you can us
 This gives you access to the Linux bash commands so you can use VIM, s, ll, etc.
 
 
-9th December 2016
------------------
+9th December 2016: git checkout
+-------------------------------
 git checkout development
 This command changes the current git branch
 Then git pull will pull the remote origin/development into the local development
 
 New Workflow is to always work with the development branch then when you are completely happy with it
 make a pull request to the origin/master
+
+12th December 1016: More on git checkout
+----------------------------------------
+git checkout can be used to quickly change from one branch to another.
+for example git checkout development will change to the development branch git checkout Master wil change to the Master branch and vice versa.
+
+Mappings
+--------
+What's really important is there are two data locations; local and remote.
+These locations are usually mapped like this ...
+development -> origin/development
+Master -> origin/Master
+
+git status will tell you what local branch you are on and whether this is up to date with the remote branch.
+
+Easy working
+------------
+So the easiest way for me to work at present is to ensure that I am using the correct local and remote branches
+development -> origin/development
+For the PyCharm I am using, at home or at work.
+
+Then start a session with git pull.
+End a session with git push.
+
+
+Use git add to add any new files you have made to the repo.
+Use git rm to remove any files you don't want transferring about.
+
+Use git commit file -m "Comment" to commit  change to the repo, i.e. force a comment on the change before it is accepted.
+
+
