@@ -25,9 +25,9 @@
             {% csrf_token %}
             <div class="form-check">
                 <label>Status:</label>
-                <label class="radio-inline"><input type="radio" name="Status" value="Close">Close</label>
-                <label class="radio-inline"><input type="radio" name="Status" value="Open" checked>Open</label>
-                <label class="radio-inline"><input type="radio" name="Status" value="On hold">On hold</label>
+                <label class="radio-inline"><input type="radio" onChange='this.form.submit();' name="Status" value="Close">Close</label>
+                <label class="radio-inline"><input type="radio" onChange='this.form.submit();' name="Status" value="Open" checked>Open</label>
+                <label class="radio-inline"><input type="radio" onChange='this.form.submit();' name="Status" value="On hold">On hold</label>
             </div>
             <div class="form-check">
                 <label>Public:</label>
