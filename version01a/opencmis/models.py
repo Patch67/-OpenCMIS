@@ -173,7 +173,7 @@ class Title(models.Model):
 
 
 # Classes for ILR
-# TODO: Fix me! This orks but it isn't right.  Specific data for an installation shouldn't be in the code it should be
+# TODO: Fix me! This works but it isn't right.  Specific data for an installation shouldn't be in the code it should be
 # in the database and have a specific form.
 
 
