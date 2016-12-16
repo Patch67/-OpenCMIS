@@ -10,8 +10,8 @@
     <div class="panel-body">{{object.summary|striptags|urlize|linebreaks}}
         <ul class="list-group">
         {% for update in updates %}
-            <li class="list-group-item">
-                <p>{{update}}</p>
+            <li class="list-group-item {% if not update.public %}list-group-item-warning{% endif %}">
+                <p>{{update.date|date:"d/m/Y"}}  {{update.personnel}}
                 {{update.update|striptags|urlize|linebreaks}}
             </li>
         {% empty %}
@@ -25,12 +25,14 @@
             {% csrf_token %}
             <div class="form-check">
                 <label>Status:</label>
-                <!-- TODO: There is an issue here in that if the only change is a radio box an entire new record is created -->
-                <!-- What I really want is that if the radio box changes only the issue record get changed, not create a new blank update record -->
                 <label class="radio-inline">
                     <input type="radio" onChange='this.form.submit();' name="Status" value="Close" {% ifequal object.status "C" %}checked="checked"{% endifequal %}>Close</label>
                 <label class="radio-inline">
+                    {% ifequal object.status "C" %}
+                    <input type="radio" onChange='this.form.submit();' name="Status" value="Open" {% ifequal object.status  "O" %}checked="checked"{% endifequal %}>Re open</label>
+                    {% else %}
                     <input type="radio" onChange='this.form.submit();' name="Status" value="Open" {% ifequal object.status  "O" %}checked="checked"{% endifequal %}>Open</label>
+                    {% endifequal %}
                 <label class="radio-inline">
                     <input type="radio" onChange='this.form.submit();' name="Status" value="On hold" {% ifequal object.status  "H" %}checked="checked"{% endifequal %}>On hold</label>
             </div>
@@ -39,6 +41,7 @@
             {% csrf_token %}
             <div class="form-check">
                 <label>Public:</label>
+                <!-- TODO: Public / Private doesn't work -->
                 <label class="radio-inline"><input type="radio" name="Public"  value="Public" checked>Public</label>
                 <label class="radio-inline"><input type="radio" name="Public" value="Private">Private</label>
             </div>
