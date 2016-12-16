@@ -7,6 +7,7 @@ from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.utils import timezone
 from django.http import HttpResponseRedirect
+from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.models import User
 from .models import Issue, Update as My_Update
 
@@ -35,12 +36,6 @@ class Detail(LoginRequiredMixin, UpdateView):
     # This appears to allow me to do anything with forms whereas the predefined Views are specifically limited to
     # certain situations.
 
-    # TODO: Can't make this type of View into a one/many form/subform
-    # http://stackoverflow.com/questions/8903601/how-to-process-a-form-via-get-or-post-using-class-based-views
-
-    # TODO: Readme for Ajax and Forms
-    # https://docs.djangoproject.com/en/1.10/topics/class-based-views/generic-editing/
-
     login_url = reverse_lazy('login')
     model = Issue
     template_name = 'issue/detail.html'
@@ -67,24 +62,41 @@ class Detail(LoginRequiredMixin, UpdateView):
         :param kwargs: Use kwargs['pk'] to get the issue id from the URL
         :return:
         """
-        '''
-        # Demo code to display the actual form values
-        print("Issue id is {0}".format(kwargs['pk']))
-        print("Status is {0}".format(request.POST['Status']))
-        print("Public is {0}".format(request.POST['Public']))
-        print("Update us {0}".format(request.POST['Update']))
-        '''
-        # Create record and save it manually
-        if request.POST['Public'] == 'Public':
-            public_boolean = True
-        else:
-            public_boolean = False
-        q = My_Update(issue=Issue.objects.get(pk=kwargs['pk']),
-                      public=public_boolean,
-                      date=timezone.now(),
-                      personnel=User.objects.get(username=request.user.username),
-                      update=request.POST['Update'])  # TODO: This doesn't do any validation
-        q.save()
+        # TODO: Do we need two forms here; one for issue record and one for update record?
+        if request.method == 'POST':
+            # Work out which form was posted, note that accessing a non existent form element raises an exception
+            form = "None"  # Just a starting value
+            try:
+                print(request.POST['Status'])
+                if request.POST['Status']:
+                    form = "Issue"
+            except MultiValueDictKeyError:
+                pass
+
+            try:
+                print(request.POST['Public'])
+                if request.POST['Public']:
+                    form = "Comment"
+            except MultiValueDictKeyError:
+                pass
+
+            if form == "Issue":
+                q = Issue.objects.get(pk=kwargs['pk'])
+                print(request.POST['Status'])
+                if request.POST['Status'] == "Open":
+                    q.status = "O"
+                elif request.POST['Status'] == "Close":
+                    q.status = "C"
+                elif request.POST['Status'] == "On hold":
+                    q.status = "H"
+                print("make is so {0}".format(q.status))
+                q.save()
+            elif form == "Comment":
+                q = My_Update(issue=Issue.objects.get(pk=kwargs['pk']),
+                              date=timezone.now(),
+                              personnel=User.objects.get(username=request.user.username),
+                              update=request.POST['Update'])  # TODO: This doesn't do any validation
+                q.save()
 
         return HttpResponseRedirect('/issue/{0}'.format(kwargs['pk']))
 
