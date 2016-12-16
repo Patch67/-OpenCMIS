@@ -21,10 +21,6 @@ person_responsible to review and/or update the document.
 
 There should also be a key performance indicator to show the state of our documents, i.e.
 the percentage of documents which are up to date.
-
-
-
-
 """
 
 
