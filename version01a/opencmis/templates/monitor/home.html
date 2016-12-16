@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Monitor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 <h1>Monitor</h1>
@@ -12,22 +16,36 @@
 <h1>{{title}}</h1>
 <h2>{{method}}</h2>
 <p>{% if data %}{{data}}{% endif %}</p>
+<p>Click on the link below to demonstrate a simple Get via a link.</p>
 <a href="">GET</a>
+<p>Click on the button below to demonstrate a Get form without data</p>
 <form action="" method="GET">
     <!-- For a GET we do not need csrf_token -->
     <!-- Get should never alter data -->
     <button>GET</button>
 </form>
-
+<p>Click on the button below to demonstrate a Post form without data</p>
 <form action="" method="POST" name="something_else">
     {% csrf_token %}
     <button>POST</button>
 </form>
-
+<p>Click on the button below to demonstrate a Post form with data</p>
 <form action="" method="POST" name="data">
     {% csrf_token %}
     <button>POST</button>
     <input name="data" hidden="True" value="My data">
 </form>
+<p>Click on the button below to demonstrate a Bootstrap Get button form without data</p>
+<div class="container">
+    <a href="" class="btn btn-primary" role="button">Get</a>
+    <p>Click on the button below to demonstrate a Bootstrap Post form with data</p>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input name="data" hidden="True" value="Some other data">
+        <input type="submit" class="btn btn-info" value="Post">
+    </form>
+</div>
+
+
 </body>
 </html>
