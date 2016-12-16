@@ -19,19 +19,27 @@
         {% endfor %}
         </ul>
     </div>
-    <a href="{% url 'issue:update' object.id %}">Close</a><br>
+
     <div class="panel-footer hidden-print">
-        <form class="form-horizontal" action="" method="post">
+        <form class="form-horizontal" action="" method="post" id="Ticket">
             {% csrf_token %}
             <div class="form-check">
                 <label>Status:</label>
-                <label class="radio-inline"><input type="radio" onChange='this.form.submit();' name="Status" value="Close">Close</label>
-                <label class="radio-inline"><input type="radio" onChange='this.form.submit();' name="Status" value="Open" checked>Open</label>
-                <label class="radio-inline"><input type="radio" onChange='this.form.submit();' name="Status" value="On hold">On hold</label>
+                <!-- TODO: There is an issue here in that if the only change is a radio box an entire new record is created -->
+                <!-- What I really want is that if the radio box changes only the issue record get changed, not create a new blank update record -->
+                <label class="radio-inline">
+                    <input type="radio" onChange='this.form.submit();' name="Status" value="Close" {% ifequal object.status "C" %}checked="checked"{% endifequal %}>Close</label>
+                <label class="radio-inline">
+                    <input type="radio" onChange='this.form.submit();' name="Status" value="Open" {% ifequal object.status  "O" %}checked="checked"{% endifequal %}>Open</label>
+                <label class="radio-inline">
+                    <input type="radio" onChange='this.form.submit();' name="Status" value="On hold" {% ifequal object.status  "H" %}checked="checked"{% endifequal %}>On hold</label>
             </div>
+        </form>
+        <form class="form-horizontal" action="" method="post" id="Comment">
+            {% csrf_token %}
             <div class="form-check">
                 <label>Public:</label>
-                <label class="radio-inline"><input type="radio" name="Public"  value="Public"checked>Public</label>
+                <label class="radio-inline"><input type="radio" name="Public"  value="Public" checked>Public</label>
                 <label class="radio-inline"><input type="radio" name="Public" value="Private">Private</label>
             </div>
             <div class="form-check">
