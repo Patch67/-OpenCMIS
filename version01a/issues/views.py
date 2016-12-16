@@ -92,10 +92,19 @@ class Detail(LoginRequiredMixin, UpdateView):
                 print("make is so {0}".format(q.status))
                 q.save()
             elif form == "Comment":
+                # TODO: Doing forms this way bypasses validation
+                # Validate Public field, only Public or Private fields allowed
+                if request.POST['Public'] == 'Public':
+                    public_boolean = True
+                elif request.POST['Public'] == 'Private':
+                    public_boolean = False
+
                 q = My_Update(issue=Issue.objects.get(pk=kwargs['pk']),
                               date=timezone.now(),
                               personnel=User.objects.get(username=request.user.username),
-                              update=request.POST['Update'])  # TODO: This doesn't do any validation
+                              update=request.POST['Update'],
+                              public=public_boolean)
+                print(q.public)
                 q.save()
 
         return HttpResponseRedirect('/issue/{0}'.format(kwargs['pk']))
