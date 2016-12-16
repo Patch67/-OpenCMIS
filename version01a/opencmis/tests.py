@@ -49,7 +49,6 @@ class StudentTestRead(TestCase):
         # Get content handle for permissions
         content_type = ContentType.objects.get_for_model(Student)
 
-
         # List all available student permissions
         print('Permission List')
         print('codename, name')
